@@ -1,3 +1,23 @@
 <resources>
-    <string name="app_name">IReport1</string>
+    <string name="app_name">MyFirstApp</string>
+    <string name="Dashboard">Dashboard</string>
+    <string name="Register">Register</string>
+    <string name="Name">Name</string>
+    <string name="Birthday">Birthday</string>
+    <string name="IBAN">IBAN</string>
+    <string name="Tel">Phone</string>
+    <string name="Lastname">Last Name</string>
+    <string name="Email">E-mail</string>
+    <string name="Addresse">Addresse</string>
+    <string name="Return">Return</string>
+    <string name="Report">Report</string>
+    <string name="search">Search</string>
+    <string name="mydesk">My Desk</string>
+    <string name="Welcome"> Willkomen bei I Report All     Unsere App hilft euch den Ämter die Gesetzeverstöße zu berichten.</string>
+    <string-array name="spinner_list">
+        <item>Unfall</item>
+        <item>Defekte Lichte</item>
+        <item>Kaputte Mülltonne</item>
+        <item>Falsch geparkt</item>
+    </string-array>
 </resources>

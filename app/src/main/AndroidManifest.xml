@@ -2,20 +2,43 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.hachemmasghouni.ireport1">
 
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.Camera.autofocus" />
+
     <application
         android:allowBackup="true"
+        android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
+            //define the main screen on Main_activity and add navigation to return on the app bar
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+            ∫
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Dashboard" />
+        <activity android:name=".Report" />
+        <activity android:name=".Login" />
+        <activity
+            android:name=".LoginActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".SignupActivity"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".MyDesk"></activity>
     </application>
 
 </manifest>
