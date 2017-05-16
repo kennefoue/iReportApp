@@ -21,12 +21,12 @@ public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
 
     //Inject the view is with Bindview replaced on the new version of Butterknife
-    @BindView(R2.id.input_name) EditText _nameText;
-    @BindView(R2.id.input_email) EditText _emailText;
-    @BindView(R2.id.input_password) EditText _passwordText;
+    @BindView(R.id.input_name) EditText _nameText;
+    @BindView(R.id.input_email) EditText _emailText;
+    @BindView(R.id.input_password) EditText _passwordText;
     //@BindView(R2.id.input_name);
-    @BindView(R2.id.btn_signup) Button _signupButton;
-    @BindView(R2.id.link_login) TextView _loginLink;
+    @BindView(R.id.btn_signup) Button _signupButton;
+    @BindView(R.id.link_login) TextView _loginLink;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

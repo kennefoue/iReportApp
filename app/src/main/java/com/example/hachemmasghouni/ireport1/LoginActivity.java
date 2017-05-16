@@ -19,10 +19,10 @@ public class LoginActivity extends AppCompatActivity {
     private static final int REQUEST_SIGNUP = 0;
 
     //InjectView was replaced with BindView on the new version
-    @BindView(R2.id.input_email) EditText _emailText;
-    @BindView(R2.id.input_password) EditText _passwordText;
-    @BindView(R2.id.btn_login) Button _loginButton;
-    @BindView(R2.id.link_signup) TextView _signupLink;
+    @BindView(R.id.input_email) EditText _emailText;
+    @BindView(R.id.input_password) EditText _passwordText;
+    @BindView(R.id.btn_login) Button _loginButton;
+    @BindView(R.id.link_signup) TextView _signupLink;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
