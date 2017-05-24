@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackground"
     tools:context="com.example.hachemmasghouni.ireport1.MainActivity">
 
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="224dp"
+        android:layout_marginBottom="88dp"
         android:onClick="button"
         android:text="@string/Dashboard"
         android:textAlignment="center"
@@ -21,7 +22,9 @@
         app:layout_constraintRight_toRightOf="parent"
         tools:layout_constraintBottom_creator="1"
         tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1" />
+        android:background="@color/colorTextHint"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintHorizontal_bias="0.501" />
 
     <Button
         android:id="@+id/btn_next"
@@ -36,9 +39,10 @@
         app:layout_constraintBottom_toTopOf="@+id/button"
         android:layout_marginStart="11dp"
         tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="59dp"
+        android:layout_marginBottom="96dp"
         app:layout_constraintLeft_toLeftOf="@+id/button"
-        android:layout_marginLeft="11dp" />
+        android:background="@color/colorTextHint"
+        android:layout_marginLeft="9dp" />
 
     <TextView
         android:id="@+id/textView2"

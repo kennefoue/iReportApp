@@ -3,6 +3,8 @@ package com.example.hachemmasghouni.ireport1;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -10,128 +12,100 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.content.ContentValues;
+import android.content.DialogInterface;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteException;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+
 
 public class LoginActivity extends AppCompatActivity {
-    private static final String TAG = "MyDesk";
-    private static final int REQUEST_SIGNUP = 0;
 
-    //InjectView was replaced with BindView on the new version
-    @BindView(R.id.input_email) EditText _emailText;
-    @BindView(R.id.input_password) EditText _passwordText;
-    @BindView(R.id.btn_login) Button _loginButton;
-    @BindView(R.id.link_signup) TextView _signupLink;
+    SQLiteOpenHelper dbhelper;
+    SQLiteDatabase db;
+    Cursor cursor;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        ButterKnife.bind(this);
 
-        _loginButton.setOnClickListener(new View.OnClickListener() {
+        //To hide AppBar for fullscreen.
+        ActionBar ab = getSupportActionBar();
+        ab.hide();
 
-            //on click go to login
+        //Referencing UserEmail, Password EditText and TextView for SignUp Now
+        final EditText _txtemail = (EditText) findViewById(R.id.txtemail);
+        final EditText _txtpass = (EditText) findViewById(R.id.txtpass);
+        Button _btnlogin = (Button) findViewById(R.id.btnsignin);
+        TextView _btnreg = (TextView) findViewById(R.id.btnreg);
+
+        //Opening SQLite Pipeline
+        dbhelper = new SQLiteDBHelper(this);
+        db = dbhelper.getReadableDatabase();
+
+        _btnlogin.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                login();
-            }
-        });
-        //when click on btn_signup (create account) then moves to signupActivity
-        _signupLink.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
 
-            @Override
-            public void onClick(View v) {
-                // Start the Signup activity
-                Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
-                startActivityForResult(intent, REQUEST_SIGNUP);
-            }
-        });
-    }
+                String email = _txtemail.getText().toString();
+                String pass = _txtpass.getText().toString();
 
-    public void login() {
-        Log.d(TAG, "Login");
+                cursor = db.rawQuery("SELECT *FROM "+SQLiteDBHelper.TABLE_NAME+" WHERE "+SQLiteDBHelper.COLUMN_EMAIL+"=? AND "
+                        +SQLiteDBHelper.COLUMN_PASSWORD+"=?",new String[] {email,pass});
+                if (cursor != null) {
+                    if(cursor.getCount() > 0) {
 
-        if (!validate()) {
-            onLoginFailed();
-            return;
-        }
+                        cursor.moveToFirst();
+                        //Retrieving User FullName and Email after successfull login and passing to LoginSucessActivity
+                        String _fname = cursor.getString(cursor.getColumnIndex(SQLiteDBHelper.COLUMN_FULLNAME));
+                        String _email= cursor.getString(cursor.getColumnIndex(SQLiteDBHelper.COLUMN_EMAIL));
+                        Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(LoginActivity.this,Dashboard.class);
+                        intent.putExtra("fullname",_fname);
+                        intent.putExtra("email",_email);
+                        startActivity(intent);
 
-        _loginButton.setEnabled(false);
-
-        final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
-                R.style.Theme_AppCompat_DayNight_Dialog);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Authenticating...");
-        progressDialog.show();
-
-        String email = _emailText.getText().toString();
-        String password = _passwordText.getText().toString();
-
-        // TODO: Implement authentication logic here.
-
-        new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        // On complete call either onLoginSuccess or onLoginFailed
-                        onLoginSuccess();
-                        // onLoginFailed();
-                        progressDialog.dismiss();
+                        //Removing [Login Screen] from the stack for preventing back button press.
+                        finish();
                     }
-                }, 3000);
-    }
+                    else {
 
+                        //showing Alert Dialog Box here for alerting user about wrong credentials
+                        final AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                        builder.setTitle("Alert");
+                        builder.setMessage("Username or Password is wrong.");
+                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_SIGNUP) {
-            if (resultCode == RESULT_OK) {
+                                dialogInterface.dismiss();
 
-                // TODO: Implement successful signup logic here(waiting untli Database done)
-                // By default the Activity is finished and log them in automatically
-                this.finish();
+                            }
+                        });
+
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                        //-------Alert Dialog Code Snippet End Here
+                    }
+                }
+
             }
-        }
+        });
+
+        // Intent For Opening the signup Activity
+        _btnreg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(LoginActivity.this,SignupActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
-    @Override
-    public void onBackPressed() {
-        // disable going back to the MainActivity
-        moveTaskToBack(true);
-    }
-
-    public void onLoginSuccess() {
-        _loginButton.setEnabled(true);
-        finish();
-    }
-
-    public void onLoginFailed() {
-        Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
-
-        _loginButton.setEnabled(true);
-    }
-    //implement the login logic and  the data in rules
-    public boolean validate() {
-        boolean valid = true;
-
-        String email = _emailText.getText().toString();
-        String password = _passwordText.getText().toString();
-
-        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            _emailText.setError("enter a valid email address");
-            valid = false;
-        } else {
-            _emailText.setError(null);
-        }
-
-        if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
-            _passwordText.setError("between 4 and 10 alphanumeric characters");
-            valid = false;
-        } else {
-            _passwordText.setError(null);
-        }
-
-        return valid;
-    }
 }

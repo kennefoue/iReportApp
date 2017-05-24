@@ -13,6 +13,12 @@
     <string name="Report">Report</string>
     <string name="search">Search</string>
     <string name="mydesk">My Desk</string>
+    <string name="login">Log In</string>
+    <string name="entername">Enter User Email</string>
+    <string name="enterpswd">Enter User Password</string>
+    <string name="account">YOUR ACCOUNT</string>
+    <string name="to">TO</string>
+    <string name="signUp">Are you new? Sign up now.</string>
     <string name="Welcome"> Willkomen bei I Report All     Unsere App hilft euch den Ämter die Gesetzeverstöße zu berichten.</string>
     <string-array name="spinner_list">
         <item>Unfall</item>
