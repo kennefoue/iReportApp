@@ -2,131 +2,92 @@ package com.example.hachemmasghouni.ireport1;
 
 
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-//import butterknife.InjectView;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteDatabase;
 
 
-//declaring the main ctivity
+
 public class SignupActivity extends AppCompatActivity {
-    private static final String TAG = "SignupActivity";
 
-    //Inject the view is with Bindview replaced on the new version of Butterknife
-    @BindView(R.id.input_name) EditText _nameText;
-    @BindView(R.id.input_email) EditText _emailText;
-    @BindView(R.id.input_password) EditText _passwordText;
-    //@BindView(R2.id.input_name);
-    @BindView(R.id.btn_signup) Button _signupButton;
-    @BindView(R.id.link_login) TextView _loginLink;
+    SQLiteOpenHelper openHelper;
+    SQLiteDatabase db;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-        ButterKnife.bind(this);
 
-        _signupButton.setOnClickListener(new View.OnClickListener() {
+        //To hide AppBar for fullscreen.
+        ActionBar ab = getSupportActionBar();
+        ab.hide();
+
+        openHelper = new SQLiteDBHelper(this);
+
+        //Referencing EditText widgets and Button placed inside in xml layout file
+        final EditText _txtfullname = (EditText) findViewById(R.id.txtname_reg);
+        final EditText _txtemail = (EditText) findViewById(R.id.txtemail_reg);
+        final EditText _txtpass = (EditText) findViewById(R.id.txtpass_reg);
+        final EditText _txtmobile = (EditText) findViewById(R.id.txtmobile_reg);
+        Button   _btnreg = (Button) findViewById(R.id.btn_reg);
+
+        //Register Button Click Event
+        _btnreg.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                signup();
-            }
-        });
+            public void onClick(View view) {
 
-        _loginLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Finish the registration screen and return to the Login activity
-                finish();
-            }
-        });
-    }
+                db = openHelper.getWritableDatabase();
 
-    public void signup() {
-        Log.d(TAG, "Signup");
+                String fullname = _txtfullname.getText().toString();
+                String email = _txtemail.getText().toString();
+                String pass = _txtpass.getText().toString();
+                String mobile = _txtmobile.getText().toString();
 
-        if (!validate()) {
-            onSignupFailed();
-            return;
-        }
+                //Calling InsertData Method - Defined below
+                InsertData(fullname, email, pass, mobile);
 
-        _signupButton.setEnabled(false);
+                //Alert dialog after clicking the Register Account
+                final AlertDialog.Builder builder = new AlertDialog.Builder(SignupActivity.this);
+                builder.setTitle("Information");
+                builder.setMessage("Your Account is Successfully Created.");
+                builder.setPositiveButton("Okey", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
 
-        final ProgressDialog progressDialog = new ProgressDialog(SignupActivity.this,
-                R.style.Theme_AppCompat_DayNight_Dialog);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Creating Account...");
-        progressDialog.show();
-
-        String name = _nameText.getText().toString();
-        String email = _emailText.getText().toString();
-        String password = _passwordText.getText().toString();
-
-
-        // TODO: Implement our own signup logic here.
-
-        new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        // On complete call either onSignupSuccess or onSignupFailed
-                        // depending on success
-                        onSignupSuccess();
-                        // onSignupFailed();
-                        progressDialog.dismiss();
+                        //Finishing the dialog and removing Activity from stack.
+                        dialogInterface.dismiss();
+                        finish();
                     }
-                }, 3000);
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
+            }
+        });
+
     }
 
+    //Inserting Data into database - Like INSERT INTO QUERY.
+    public void InsertData(String fullName, String email, String password, String mobile ) {
 
-    public void onSignupSuccess() {
-        _signupButton.setEnabled(true);
-        setResult(RESULT_OK, null);
-        finish();
+        ContentValues values = new ContentValues();
+        values.put(SQLiteDBHelper.COLUMN_FULLNAME,fullName);
+        values.put(SQLiteDBHelper.COLUMN_EMAIL,email);
+        values.put(SQLiteDBHelper.COLUMN_PASSWORD,password);
+        values.put(SQLiteDBHelper.COLUMN_MOBILE,mobile);
+        long id = db.insert(SQLiteDBHelper.TABLE_NAME,null,values);
+
     }
 
-    public void onSignupFailed() {
-        Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
-
-        _signupButton.setEnabled(true);
-    }
-
-    //define logic for data in when signing up
-    public boolean validate() {
-        boolean valid = true;
-
-        String name = _nameText.getText().toString();
-        String email = _emailText.getText().toString();
-        String password = _passwordText.getText().toString();
-
-        if (name.isEmpty() || name.length() < 3) {
-            _nameText.setError("at least 3 characters");
-            valid = false;
-        } else {
-            _nameText.setError(null);
-        }
-
-        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            _emailText.setError("enter a valid email address");
-            valid = false;
-        } else {
-            _emailText.setError(null);
-        }
-
-        if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
-            _passwordText.setError("between 4 and 10 alphanumeric characters");
-            valid = false;
-        } else {
-            _passwordText.setError(null);
-        }
-
-        return valid;
-    }
 }
