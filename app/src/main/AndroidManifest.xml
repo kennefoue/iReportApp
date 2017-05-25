@@ -19,7 +19,7 @@
         android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
         //fehler war oben
 
-        <activity android:name=".LoginActivity">
+        <activity android:name=".MainActivity">
             //define the main screen on Main_activity and add navigation to return on the app bar
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -34,7 +34,7 @@
         <activity android:name=".Dashboard" />
         <activity android:name=".Report" />
         <activity
-            android:name=".MainActivity"
+            android:name=".LoginActivity"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
         <activity
             android:name=".SignupActivity"
