@@ -21,7 +21,6 @@ import android.database.sqlite.SQLiteException;
 
 
 
-
 public class LoginActivity extends AppCompatActivity {
 
     SQLiteOpenHelper dbhelper;
@@ -69,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
                         intent.putExtra("email",_email);
                         startActivity(intent);
 
-                        //Removing [Login Screen] from the stack for preventing back button press.
+                        //Removing [LoginScreen] from the stack for preventing back button press.
                         finish();
                     }
                     else {

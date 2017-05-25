@@ -6,11 +6,11 @@
     android:background="@color/colorBackground"
     android:layout_height="match_parent">
 
+
     <View
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorBackground"
         android:alpha="0.6"
         android:layout_alignParentTop="true" />
 
@@ -84,7 +84,7 @@
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/white"
+        android:textColor="#FFFFFF"
         android:text="@string/login"
         android:textSize="20sp"
         android:id="@+id/btnsignin"
@@ -102,7 +102,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/signUp"
         android:id="@+id/btnreg"
-        android:textColor="#ffffff"
+        android:textColor="#FFFFFF"
         android:layout_marginTop="22dp"
         android:layout_below="@+id/btnsignin"
         android:layout_centerHorizontal="true" />
