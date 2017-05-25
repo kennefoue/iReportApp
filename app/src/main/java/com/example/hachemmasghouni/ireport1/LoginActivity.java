@@ -44,11 +44,14 @@ public class LoginActivity extends AppCompatActivity {
 
         //Opening SQLite Pipeline
         dbhelper = new SQLiteDBHelper(this);
-        db = dbhelper.getReadableDatabase();
+        // syntax error war hier deswegen wurde innerhalb der mthode geschrieben
+        //db = dbhelper.getReadableDatabase();
 
         _btnlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                db = dbhelper.getReadableDatabase(); //should be inside the method to get the readable database
 
                 String email = _txtemail.getText().toString();
                 String pass = _txtpass.getText().toString();

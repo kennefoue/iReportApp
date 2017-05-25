@@ -106,4 +106,18 @@
         android:layout_marginTop="22dp"
         android:layout_below="@+id/btnsignin"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="137dp"
+        android:layout_height="44dp"
+        android:layout_marginLeft="122dp"
+        android:layout_marginStart="122dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="cursive"
+        android:text="@string/iReport"
+        android:textAlignment="center"
+        android:textColor="#ffffff"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 </RelativeLayout>
