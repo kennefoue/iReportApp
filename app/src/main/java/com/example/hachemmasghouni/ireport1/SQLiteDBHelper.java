@@ -10,7 +10,7 @@ import android.support.v7.app.AppCompatActivity;
  * Created by hachemmasghouni on 22.05.17.
  */
 
-// this is a class which manage SQLite Database and table
+// this class which manage SQLite Database and table
 
 //will extends with  SQLiteOpenHelper class
 public class SQLiteDBHelper extends SQLiteOpenHelper {
