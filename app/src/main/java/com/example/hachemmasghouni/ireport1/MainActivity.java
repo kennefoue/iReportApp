@@ -16,15 +16,16 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void btn_next(View v) {
+    public void button8(View v){
+
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
-
     }
 
-    public void button(View v) {
-        Intent intent = new Intent(this, Dashboard.class);
+    public void button11(View v){
+
+        Intent intent = new Intent(this, SignupActivity.class);
         startActivity(intent);
-
     }
+
 }

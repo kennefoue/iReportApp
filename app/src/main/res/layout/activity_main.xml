@@ -7,43 +7,6 @@
     android:background="@color/colorBackground"
     tools:context="com.example.hachemmasghouni.ireport1.MainActivity">
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="88dp"
-        android:onClick="button"
-        android:text="@string/Dashboard"
-        android:textAlignment="center"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:layout_constraintBottom_creator="1"
-        tools:layout_constraintLeft_creator="1"
-        android:background="@color/colorTextHint"
-        tools:layout_constraintRight_creator="1"
-        app:layout_constraintHorizontal_bias="0.501" />
-
-    <Button
-        android:id="@+id/btn_next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="btn_next"
-        android:text="@string/Register"
-        android:textAlignment="center"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        tools:layout_constraintBottom_creator="1"
-        app:layout_constraintBottom_toTopOf="@+id/button"
-        android:layout_marginStart="11dp"
-        tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="96dp"
-        app:layout_constraintLeft_toLeftOf="@+id/button"
-        android:background="@color/colorTextHint"
-        android:layout_marginLeft="9dp" />
-
     <TextView
         android:id="@+id/textView2"
         android:layout_width="0dp"
@@ -51,6 +14,7 @@
         android:text="@string/Welcome"
         android:textAlignment="center"
         android:textSize="18sp"
+        android:textColor="#FFFFFF"
         tools:layout_constraintTop_creator="1"
         tools:layout_constraintRight_creator="1"
         android:layout_marginStart="75dp"
@@ -62,5 +26,49 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginLeft="75dp"
         android:layout_marginRight="75dp" />
+
+    <Button
+        android:id="@+id/button8"
+        android:layout_width="0dp"
+        android:layout_height="53dp"
+        android:layout_marginBottom="57dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginLeft="22dp"
+        android:layout_marginRight="22dp"
+        android:layout_marginStart="22dp"
+        android:background="@color/colorTextHint"
+        android:onClick="button8"
+        android:text="@string/login"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1" />
+
+    <Button
+        android:id="@+id/button11"
+        android:layout_width="0dp"
+        android:layout_height="64dp"
+        android:onClick="button11"
+        android:text="Button"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        android:background="@color/colorTextHint"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toTopOf="@+id/button8"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="37dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp" />
 
 </android.support.constraint.ConstraintLayout>
