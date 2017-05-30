@@ -1,112 +1,40 @@
 package com.example.hachemmasghouni.ireport1;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.database.sqlite.SQLiteException;
-
 
 
 public class LoginActivity extends AppCompatActivity {
-
-    SQLiteOpenHelper dbhelper;
-    SQLiteDatabase db;
-    Cursor cursor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //To hide AppBar for fullscreen.
-        ActionBar ab = getSupportActionBar();
-        ab.hide();
+        EditText email = (EditText) findViewById(R.id.etEmail);
+        EditText password = (EditText) findViewById(R.id.etPassword);
+        Button login = (Button) findViewById(R.id.bLogin);
+        TextView registerLink = (TextView) findViewById(R.id.tRegister);
 
-        //Referencing UserEmail, Password EditText and TextView for SignUp Now
-        final EditText _txtemail = (EditText) findViewById(R.id.txtemail);
-        final EditText _txtpass = (EditText) findViewById(R.id.txtpass);
-        Button _btnlogin = (Button) findViewById(R.id.btnsignin);
-        TextView _btnreg = (TextView) findViewById(R.id.btnreg);
-
-        //Opening SQLite Pipeline
-        dbhelper = new SQLiteDBHelper(this);
-        // syntax error war hier deswegen wurde innerhalb der mthode geschrieben
-        //db = dbhelper.getReadableDatabase();
-
-        _btnlogin.setOnClickListener(new View.OnClickListener() {
+        registerLink.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-
-                db = dbhelper.getReadableDatabase(); //should be inside the method to get the readable database
-
-                String email = _txtemail.getText().toString();
-                String pass = _txtpass.getText().toString();
-
-                cursor = db.rawQuery("SELECT *FROM "+SQLiteDBHelper.TABLE_NAME+" WHERE "+SQLiteDBHelper.COLUMN_EMAIL+"=? AND "
-                        +SQLiteDBHelper.COLUMN_PASSWORD+"=?",new String[] {email,pass});
-                if (cursor != null) {
-                    if(cursor.getCount() > 0) {
-
-                        cursor.moveToFirst();
-                        //Retrieving User FullName and Email after successfull login and passing to LoginSucessActivity
-                        String _fname = cursor.getString(cursor.getColumnIndex(SQLiteDBHelper.COLUMN_FULLNAME));
-                        String _email= cursor.getString(cursor.getColumnIndex(SQLiteDBHelper.COLUMN_EMAIL));
-                        Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(LoginActivity.this,Dashboard.class);
-                        intent.putExtra("fullname",_fname);
-                        intent.putExtra("email",_email);
-                        startActivity(intent);
-
-                        //Removing [LoginScreen] from the stack for preventing back button press.
-                        finish();
-                    }
-                    else {
-
-                        //showing Alert Dialog Box here for alerting user about wrong credentials
-                        final AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-                        builder.setTitle("Alert");
-                        builder.setMessage("Username or Password is wrong.");
-                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-
-                                dialogInterface.dismiss();
-
-                            }
-                        });
-
-                        AlertDialog dialog = builder.create();
-                        dialog.show();
-                        //-------Alert Dialog Code Snippet End Here
-                    }
-                }
-
+            public void onClick(View v) {
+                Intent registerIntent = new Intent(LoginActivity.this, SignupActivity.class);
+                LoginActivity.this.startActivity(registerIntent);
             }
         });
 
-        // Intent For Opening the signup Activity
-        _btnreg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intent = new Intent(LoginActivity.this,SignupActivity.class);
-                startActivity(intent);
-            }
-        });
 
     }
 
