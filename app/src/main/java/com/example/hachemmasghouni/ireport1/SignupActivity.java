@@ -1,93 +1,74 @@
 package com.example.hachemmasghouni.ireport1;
 
-import android.content.Intent;
-import android.app.ProgressDialog;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class SignupActivity extends AppCompatActivity {
-
-    SQLiteOpenHelper openHelper;
-    SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        //To hide AppBar for fullscreen.
-        ActionBar ab = getSupportActionBar();
-        ab.hide();
+        final EditText etFullName = (EditText) findViewById(R.id.etFullName);
+        final EditText etEmail = (EditText) findViewById(R.id.etEmail);
+        final EditText etPassword = (EditText) findViewById(R.id.etPassword);
+        final EditText etMobile = (EditText) findViewById(R.id.etMobile);
+        final Button register = (Button) findViewById(R.id.bRegister);
 
-        openHelper = new SQLiteDBHelper(this);
-
-        //Referencing EditText widgets and Button placed inside in xml layout file
-        final EditText _txtfullname = (EditText) findViewById(R.id.txtname_reg);
-        final EditText _txtemail = (EditText) findViewById(R.id.txtemail_reg);
-        final EditText _txtpass = (EditText) findViewById(R.id.txtpass_reg);
-        final EditText _txtmobile = (EditText) findViewById(R.id.txtmobile_reg);
-        Button   _btnreg = (Button) findViewById(R.id.btn_reg);
-
-        //Register Button Click Event
-        _btnreg.setOnClickListener(new View.OnClickListener() {
+        register.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
+                final String fullName = etFullName.getText().toString();
+                final String email = etEmail.getText().toString();
+                final String password = etPassword.getText().toString();
+                final String mobile = etMobile.getText().toString();
 
-                db = openHelper.getWritableDatabase();
-
-                String fullname = _txtfullname.getText().toString();
-                String email = _txtemail.getText().toString();
-                String pass = _txtpass.getText().toString();
-                String mobile = _txtmobile.getText().toString();
-
-                //Calling InsertData Method - Defined below
-                InsertData(fullname, email, pass, mobile);
-
-                //Alert dialog after clicking the Register Account
-                final AlertDialog.Builder builder = new AlertDialog.Builder(SignupActivity.this);
-                builder.setTitle("Information");
-                builder.setMessage("Your Account is Successfully Created.");
-                builder.setPositiveButton("Okey", new DialogInterface.OnClickListener() {
+                Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                        //Finishing the dialog and removing Activity from stack.
-                        dialogInterface.dismiss();
-                        finish();
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonResponse = new JSONObject(response);
+                            boolean success = jsonResponse.getBoolean("success");
+                            if(success) {
+                                Intent loginIntent = new Intent(SignupActivity.this, LoginActivity.class);
+                                SignupActivity.this.startActivity(loginIntent);
+                            } else {
+                                AlertDialog.Builder alertBuilder = new AlertDialog.Builder(SignupActivity.this);
+                                alertBuilder.setMessage("Register Failed")
+                                            .setNegativeButton("Retry", null)
+                                            .create()
+                                            .show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
-                });
-
-                AlertDialog dialog = builder.create();
-                dialog.show();
-
+                };
+                RegisterRequest registerRequest = new RegisterRequest(fullName, email, password, mobile, responseListener);
+                RequestQueue queue = Volley.newRequestQueue(SignupActivity.this);
+                queue.add(registerRequest);
             }
         });
-
     }
 
-    //Inserting Data into database - Like INSERT INTO QUERY.
-    public void InsertData(String fullName, String email, String password, String mobile ) {
-
-        ContentValues values = new ContentValues();
-        values.put(SQLiteDBHelper.COLUMN_FULLNAME,fullName);
-        values.put(SQLiteDBHelper.COLUMN_EMAIL,email);
-        values.put(SQLiteDBHelper.COLUMN_PASSWORD,password);
-        values.put(SQLiteDBHelper.COLUMN_MOBILE,mobile);
-        long id = db.insert(SQLiteDBHelper.TABLE_NAME,null,values);
-
-    }
 
 }
