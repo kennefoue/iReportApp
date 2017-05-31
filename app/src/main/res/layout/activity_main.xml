@@ -41,7 +41,7 @@
         android:fontFamily="cursive"
         android:text="@string/iReport"
         android:textAlignment="center"
-        android:textColor="@color/icons"
+        android:textColor="@color/colorText"
         android:textSize="36sp"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
