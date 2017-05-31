@@ -52,4 +52,13 @@
         app:layout_constraintRight_toRightOf="@+id/button2"
         android:layout_marginBottom="93dp"
         android:layout_marginRight="1dp" />
+
+    <TextView
+        android:id="@+id/tWlcMsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="148dp"
+        tools:layout_editor_absoluteY="139dp" />
+
 </android.support.constraint.ConstraintLayout>
