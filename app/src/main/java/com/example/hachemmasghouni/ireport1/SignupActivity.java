@@ -1,17 +1,12 @@
 package com.example.hachemmasghouni.ireport1;
 
-import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
-import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.database.sqlite.SQLiteOpenHelper;
-import android.database.sqlite.SQLiteDatabase;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
