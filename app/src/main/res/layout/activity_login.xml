@@ -90,7 +90,7 @@
         android:layout_alignLeft="@+id/etPassword"
         android:layout_alignStart="@+id/etPassword"
         android:layout_alignRight="@+id/etPassword"
-        android:background="@color/colorTextHint"
+        android:background="@color/colorPrimaryDark"
         android:layout_alignEnd="@+id/etPassword" />
 
     <TextView
