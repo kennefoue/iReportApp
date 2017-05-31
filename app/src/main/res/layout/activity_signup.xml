@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:background="@color/colorBackground"
+    android:background="@color/colorPrimaryLight"
     android:layout_height="match_parent">
 
 
@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/etFullName"
         android:hint="Enter Full Name"
-        android:textColor="#ffffff"
+        android:textColor="@color/icons"
         android:drawablePadding="10dp"
         android:textColorHint="#cccccc"
         android:layout_marginLeft="20dp"
@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
         android:ems="10"
-        android:textColor="#ffffff"
+        android:textColor="@color/icons"
         android:textColorHint="#cccccc"
         android:id="@+id/etEmail"
         android:hint="Enter Your Email"
@@ -50,7 +50,7 @@
         android:id="@+id/etPassword"
         android:hint="Enter Your Password"
         android:singleLine="true"
-        android:textColor="#ffffff"
+        android:textColor="@color/icons"
         android:textColorHint="#cccccc"
         android:drawablePadding="10dp"
         android:layout_below="@+id/etEmail"
@@ -65,7 +65,7 @@
         android:id="@+id/etMobile"
         android:hint="Enter Your Mobile"
         android:singleLine="true"
-        android:textColor="#ffffff"
+        android:textColor="@color/icons"
         android:textColorHint="#cccccc"
         android:drawablePadding="10dp"
         android:layout_below="@+id/etPassword"
@@ -84,16 +84,16 @@
         android:layout_alignStart="@+id/etMobile"
         android:layout_below="@+id/etMobile"
         android:layout_marginTop="30dp"
-        android:background="@color/colorTextHint"
+        android:background="@color/colorPrimaryDark"
         android:text="Register"
-        android:textColor="#ffffff" />
+        android:textColor="@color/icons" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Create Account"
-        android:textColor="#ffffff"
+        android:textColor="@color/icons"
         android:textSize="40sp"
         android:id="@+id/txt_success_name"
         android:gravity="center_horizontal"
@@ -108,7 +108,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="After clicking the Register Button. You will be redirected to Login Screen"
         android:id="@+id/textView6"
-        android:textColor="#ffffff"
+        android:textColor="@color/icons"
         android:gravity="center_horizontal"
         android:layout_below="@+id/txt_success_name"
         android:layout_alignRight="@+id/etFullName"
@@ -126,7 +126,7 @@
         android:fontFamily="cursive"
         android:text="@string/iReport"
         android:textAlignment="center"
-        android:textColor="#ffffff"
+        android:textColor="@color/icons"
         android:textSize="24sp"
         android:textStyle="bold" />
 </RelativeLayout>
