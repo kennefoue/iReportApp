@@ -14,7 +14,7 @@ public class Dashboard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard);
 
-        final TextView tWlcMsg = (TextView) findViewById(R.id.tWlcMsg);
+        final TextView tWlcMsg = (TextView) findViewById(R.id.tv_test_welcome_messae);
 
         Intent loginIntent = getIntent();
         String fullName = loginIntent.getStringExtra("fullName");
@@ -41,12 +41,12 @@ public class Dashboard extends AppCompatActivity {
 
     }
     public void button4(View v) {
-        Intent intent = new Intent(this, Report.class);
+        Intent intent = new Intent(this, ReportActivity.class);
         startActivity(intent);
     }
 
     public void button6(View v) {
-        Intent intent = new Intent(this, MyDesk.class);
+        Intent intent = new Intent(this, MyDeskActivity.class);
         startActivity(intent);
     }
 

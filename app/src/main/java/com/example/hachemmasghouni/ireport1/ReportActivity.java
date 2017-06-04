@@ -12,7 +12,7 @@ import com.google.android.gms.location.places.ui.PlacePicker;
 
 
 
-//public class Report extends AppCompatActivity {
+//public class ReportActivity extends AppCompatActivity {
 
    /* @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +22,7 @@ import com.google.android.gms.location.places.ui.PlacePicker;
 }  */
 
 
-public class Report extends AppCompatActivity{
+public class ReportActivity extends AppCompatActivity{
 
     private final int REQUEST_CODE_PLACEPICKER = 1;
 
@@ -38,8 +38,8 @@ public class Report extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.report);
 
-        getLocationBtn = (Button) findViewById(R.id.getLocation_btn);
-        getLocationTv = (TextView) findViewById(R.id.getLocation_tv);
+        getLocationBtn = (Button) findViewById(R.id.btn_get_location);
+        getLocationTv = (TextView) findViewById(R.id.tv_get_location);
         getLocationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,7 +69,6 @@ public class Report extends AppCompatActivity{
 
     private void displaySelectedPlaceFromPlacePicker(Intent data){
         Place placeSelected = PlacePicker.getPlace(data, this);
-
         getLocationTv.setText(placeSelected.getAddress().toString());
     }
 

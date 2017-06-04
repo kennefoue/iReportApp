@@ -5,14 +5,14 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
-public class MyDesk extends AppCompatActivity {
+public class MyDeskActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_desk);
 
-        final TextView tWlcMsg = (TextView) findViewById(R.id.tWlcMsg);
+        final TextView tWlcMsg = (TextView) findViewById(R.id.tv_test_welcome_messae);
 
         Intent loginIntent = getIntent();
         String fullName = loginIntent.getStringExtra("fullName");

@@ -16,7 +16,7 @@
     <string name="mydesk">My Desk</string>
     <string name="description_text">Welcome Image</string>
     <string name="Welcome"> Willkomen bei I Report All     Unsere App hilft euch den Ämter die Gesetzeverstöße zu berichten.</string>
-    <string-array name="spinner_list">
+    <string-array name="list_report_typ">
         <item>Unfall</item>
         <item>Defekte Lichte</item>
         <item>Kaputte Mülltonne</item>
@@ -32,4 +32,24 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="text_create_account">Create Account</string>
+    <string name="text_register_info">After clicking the Register Button. You will be redirected to Login Screen</string>
+    <string name="hint_full_name">Full Name</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_mobile">Mobile</string>
+    <string name="text_register">Register</string>
+    <string name="text_login">Login</string>
+    <string name="text_dashboard">Dashboard</string>
+    <string name="user_welcome_message">User welcome message</string>
+    <string name="text_report">Report</string>
+    <string name="text_report_typ">Report type:</string>
+    <string name="text_take_picture">Pictures</string>
+    <string name="text_location">Location</string>
+    <string name="text_get_location">Get Location</string>
+    <string name="text_send">Send</string>
+    <string name="image_content_description">Image</string>
+    <string name="text_search">Search</string>
+    <string name="text_return">Return</string>
+    <string name="text_ok">OK</string>
 </resources>

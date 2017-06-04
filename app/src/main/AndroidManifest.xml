@@ -17,7 +17,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Report">
+        <activity android:name=".MainActivity">
             //define the main screen on Main_activity and add navigation to return on the app bar
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -25,20 +25,18 @@
             ∫
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".Dashboard" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".Login" />
+        <activity android:name=".ReportActivity" />
         <activity
             android:name=".LoginActivity"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".SignupActivity"
             android:theme="@style/AppTheme" />
-        <activity android:name=".MyDesk" />
+        <activity android:name=".MyDeskActivity" />
         <meta-data android:name="com.google.android.geo.API_KEY"
                    android:value="AIzaSyDAsUW2Oj88xQZaBJOFMo8YIjPku52fSh4" />
         <!--
@@ -47,7 +45,7 @@
              Note that the API key is linked to the encryption key used to sign the APK.
              You need a different API key for each encryption key, including the release key that is used to
              sign the APK for publishing.
-             You can define the keys for the debug and release targets in src/debug/ and src/release/. 
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
         -->
 
 

@@ -23,11 +23,11 @@ public class SignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        final EditText etFullName = (EditText) findViewById(R.id.etFullName);
-        final EditText etEmail = (EditText) findViewById(R.id.etEmail);
-        final EditText etPassword = (EditText) findViewById(R.id.etPassword);
-        final EditText etMobile = (EditText) findViewById(R.id.etMobile);
-        final Button register = (Button) findViewById(R.id.bRegister);
+        final EditText etFullName = (EditText) findViewById(R.id.et_full_name);
+        final EditText etEmail = (EditText) findViewById(R.id.et_email);
+        final EditText etPassword = (EditText) findViewById(R.id.et_password);
+        final EditText etMobile = (EditText) findViewById(R.id.et_mobile);
+        final Button register = (Button) findViewById(R.id.btn_register);
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
