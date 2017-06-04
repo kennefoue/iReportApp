@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_profile"
+        android:title="@string/text_profile">
+    </item>
+
+    <item
+        android:id="@+id/menu_about"
+        android:title="@string/text_about">
+    </item>
+
+    <item
+        android:id="@+id/menu_log_out"
+        android:title="@string/text_log_out">
+    </item>
+
+</menu>

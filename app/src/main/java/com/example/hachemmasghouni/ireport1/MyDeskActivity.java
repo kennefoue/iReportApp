@@ -10,7 +10,7 @@ public class MyDeskActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.my_desk);
+        setContentView(R.layout.activity_my_desk);
 
         final TextView tWlcMsg = (TextView) findViewById(R.id.tv_test_welcome_messae);
 

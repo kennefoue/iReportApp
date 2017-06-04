@@ -16,6 +16,9 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+
+        // circle menu
+        maven {url "https://jitpack.io"}
     }
 }
 

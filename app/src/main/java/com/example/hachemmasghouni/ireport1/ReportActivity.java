@@ -17,7 +17,7 @@ import com.google.android.gms.location.places.ui.PlacePicker;
    /* @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.report);
+        setContentView(R.layout.activity_report);
     }
 }  */
 
@@ -36,7 +36,7 @@ public class ReportActivity extends AppCompatActivity{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.report);
+        setContentView(R.layout.activity_report);
 
         getLocationBtn = (Button) findViewById(R.id.btn_get_location);
         getLocationTv = (TextView) findViewById(R.id.tv_get_location);

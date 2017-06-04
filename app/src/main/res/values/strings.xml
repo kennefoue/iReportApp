@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">iReport</string>
-    <string name="slogan">be the city Hero...</string>
+    <string name="slogan">be the city Hero !</string>
     <string name="Dashboard">Dashboard</string>
     <string name="Register">Register</string>
     <string name="Name">Name</string>
@@ -15,25 +15,9 @@
     <string name="search">Search</string>
     <string name="mydesk">My Desk</string>
     <string name="description_text">Welcome Image</string>
-    <string name="Welcome"> Willkomen bei I Report All     Unsere App hilft euch den Ämter die Gesetzeverstöße zu berichten.</string>
-    <string-array name="list_report_typ">
-        <item>Unfall</item>
-        <item>Defekte Lichte</item>
-        <item>Kaputte Mülltonne</item>
-        <item>Falsch geparkt</item>
-    </string-array>
-    <string-array name="userchoise_list">
-        <item>Sign In</item>
-        <item>Sign Up</item>
-    </string-array>
     <string name="title_activity_maps">Map</string>
-    <string name="api_key">AIzaSyDAsUW2Oj88xQZaBJOFMo8YIjPku52fSh4</string>
     <string name="test">Picker Result</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="text_create_account">Create Account</string>
-    <string name="text_register_info">After clicking the Register Button. You will be redirected to Login Screen</string>
     <string name="hint_full_name">Full Name</string>
     <string name="hint_email">Email</string>
     <string name="hint_password">Password</string>
@@ -41,7 +25,6 @@
     <string name="text_register">Register</string>
     <string name="text_login">Login</string>
     <string name="text_dashboard">Dashboard</string>
-    <string name="user_welcome_message">User welcome message</string>
     <string name="text_report">Report</string>
     <string name="text_report_typ">Report type:</string>
     <string name="text_take_picture">Pictures</string>
@@ -52,4 +35,22 @@
     <string name="text_search">Search</string>
     <string name="text_return">Return</string>
     <string name="text_ok">OK</string>
+    <string name="user_welcome_message">User welcome message</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="api_key">AIzaSyDAsUW2Oj88xQZaBJOFMo8YIjPku52fSh4</string>
+    <string name="text_register_info">After clicking the Register Button. You will be redirected to Login Screen</string>
+    <string name="Welcome"> Willkomen bei I Report All     Unsere App hilft euch den Ämter die Gesetzeverstöße zu berichten.</string>
+    <string name="text_profile">Profile</string>
+    <string name="text_about">About</string>
+    <string name="text_log_out">Log out</string>
+    <string-array name="arr_report_typ">
+        <item>Unfall</item>
+        <item>Defekte Lichte</item>
+        <item>Kaputte Mülltonne</item>
+        <item>Falsch geparkt</item>
+    </string-array>
+    <string-array name="userchoise_list">
+        <item>Sign In</item>
+        <item>Sign Up</item>
+    </string-array>
 </resources>
