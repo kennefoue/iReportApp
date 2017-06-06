@@ -12,7 +12,7 @@ public class MyDeskActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_desk);
 
-        final TextView tWlcMsg = (TextView) findViewById(R.id.tv_test_welcome_messae);
+        //final TextView tWlcMsg = (TextView) findViewById(R.id.tv_test_welcome_messae);
 
         Intent loginIntent = getIntent();
         String fullName = loginIntent.getStringExtra("fullName");
@@ -23,6 +23,6 @@ public class MyDeskActivity extends AppCompatActivity {
                 "\n" + "Registred Email: " + email + "\n" +
                 "Mobile: " + mobile;
 
-        tWlcMsg.setText(wlcMsg);
+        //tWlcMsg.setText(wlcMsg);
     }
 }

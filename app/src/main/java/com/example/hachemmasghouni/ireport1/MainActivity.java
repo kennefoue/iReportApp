@@ -22,10 +22,5 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void button11(View v){
-
-        Intent intent = new Intent(this, SignupActivity.class);
-        startActivity(intent);
-    }
 
 }
