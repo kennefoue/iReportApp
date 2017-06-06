@@ -54,7 +54,7 @@ public class Dashboard extends AppCompatActivity {
                                 startActivity(i0);
                                 break;
 
-                            //other cases need to be implemented depending on what we're going to define
+                            //other cases (1,2) need to be implemented depending on what we're going to define
 
                             case 3:
                                 Toast.makeText(Dashboard.this, "Welcome to advices", Toast.LENGTH_SHORT).show();
@@ -72,9 +72,9 @@ public class Dashboard extends AppCompatActivity {
 
 
 
+//was desactivated cuz no need th show the username and email everytime in the background
 
-
-    public void displayWelcomeMessage(TextView tWlcMsg) {
+  /*  public void displayWelcomeMessage(TextView tWlcMsg) {
         Intent loginIntent = getIntent();
         String fullName = loginIntent.getStringExtra("fullName");
         String email = loginIntent.getStringExtra("email");
@@ -86,7 +86,7 @@ public class Dashboard extends AppCompatActivity {
 
         tWlcMsg.setText(wlcMsg);
     }
-
+*/
 
 
 }
