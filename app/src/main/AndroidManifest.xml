@@ -52,7 +52,7 @@
         -->
 
         <activity android:name=".AdvicesActivity" />
-        <activity android:name=".Dashboard"></activity>
+        <activity android:name=".Dashboard" />
     </application>
 
 </manifest>

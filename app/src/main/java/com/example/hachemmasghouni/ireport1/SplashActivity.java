@@ -10,7 +10,7 @@ import com.viksaa.sssplash.lib.model.ConfigSplash;
 
 
 
-public class Splash extends AwesomeSplash {
+public class SplashActivity extends AwesomeSplash {
 
 //No need for the layout thats why uncommented
   /*  @Override
@@ -52,7 +52,7 @@ public class Splash extends AwesomeSplash {
 
     @Override
     public void animationsFinished() {
-        startActivity(new Intent(Splash.this,MainActivity.class));
+        startActivity(new Intent(SplashActivity.this,MainActivity.class));
     }
 }
 
