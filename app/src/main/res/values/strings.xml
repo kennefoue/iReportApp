@@ -16,7 +16,8 @@
     <string name="mydesk">My Desk</string>
     <string name="description_text">Welcome Image</string>
     <string name="title_activity_maps">Map</string>
-    <string name="test">Picker Result</string>
+    <string name="text_content_description">Content Description...</string>
+    <string name="text_picker_result">Picker Result</string>
     <string name="text_create_account">Create Account</string>
     <string name="hint_full_name">Full Name</string>
     <string name="hint_email">Email</string>
@@ -26,10 +27,11 @@
     <string name="text_login">Login</string>
     <string name="text_dashboard">Dashboard</string>
     <string name="text_report">Report</string>
-    <string name="text_report_typ">Report type:</string>
+    <string name="text_report_typ">Typ:</string>
     <string name="text_take_picture">Pictures</string>
-    <string name="text_location">Location</string>
+    <string name="text_location">Location:</string>
     <string name="text_get_location">Get Location</string>
+    <string name="text_reference">Reference(vehicle Nr., comments...)</string>
     <string name="text_send">Send</string>
     <string name="image_content_description">Image</string>
     <string name="text_search">Search</string>

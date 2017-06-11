@@ -8,7 +8,6 @@
     android:background="@drawable/side_nav_bar"
     android:layout_height="match_parent">
 
-
     <TextView
         android:id="@+id/title"
         android:layout_width="0dp"
@@ -151,7 +150,7 @@
         android:textSize="46sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/textView3"
-        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
