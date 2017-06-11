@@ -1,10 +1,15 @@
 package com.example.hachemmasghouni.ireport1;
 
+import android.*;
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.PixelFormat;
 import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -23,8 +28,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.DatagramPacket;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.jar.*;
 
 
 //public class ReportActivity extends AppCompatActivity {
@@ -39,6 +46,7 @@ import java.util.Date;
 
 public class ReportActivity extends AppCompatActivity implements SurfaceHolder.Callback {
 
+    public static final int CAMERA_PERMISSION_REQUEST_CODE = 8675309;
     private final int REQUEST_CODE_PLACEPICKER = 1;
 
     private ImageView getLocationIv;
@@ -46,10 +54,13 @@ public class ReportActivity extends AppCompatActivity implements SurfaceHolder.C
 
     Camera camera;
     SurfaceView cameraSurfaceView;
-    FloatingActionButton btnTakePicture;
     SurfaceHolder cameraSurfaceHolder;
-    //Camera.PictureCallback jpegCallback;
-    Camera.ShutterCallback shutterCallback;
+    FloatingActionButton btnTakePicture;
+    ImageView ivFullScreenCamera;
+    ImageView ivCameraPreview;
+    boolean previewing = false;
+    String stringPath = "/sdcard/sampleVideo.3gp";
+
 
 
 
@@ -61,11 +72,14 @@ public class ReportActivity extends AppCompatActivity implements SurfaceHolder.C
         setContentView(R.layout.activity_report);
 
         /* find views by Ids */
+        // Place Picker
         getLocationIv = (ImageView) findViewById(R.id.iv_get_location);
         pickerResult = (TextView) findViewById(R.id.result_text_location);
-
+        // Camera Preview
         cameraSurfaceView = (SurfaceView) findViewById(R.id.srfcv_camera);
         btnTakePicture = (FloatingActionButton) findViewById(R.id.btn_take_photo);
+        ivFullScreenCamera = (ImageView) findViewById(R.id.iv_fullscreen);
+        ivCameraPreview = (ImageView) findViewById(R.id.iv_preview);
 
         /* Google Place Picker */
         getLocationIv.setOnClickListener(new View.OnClickListener() {
@@ -76,127 +90,100 @@ public class ReportActivity extends AppCompatActivity implements SurfaceHolder.C
         });
 
         /* Camera surface View */
+        getWindow().setFormat(PixelFormat.UNKNOWN);
+        cameraSurfaceView = (SurfaceView) findViewById(R.id.srfcv_camera);
         cameraSurfaceHolder = cameraSurfaceView.getHolder();
-
-        // avoid report layout to open:
         cameraSurfaceHolder.addCallback(this);
-        // app crash when clicking on btnTakePicture;
         cameraSurfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-        btnTakePicture.setOnClickListener(new FloatingActionButton.OnClickListener() {
+        ivFullScreenCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cameraImage();
+
             }
         });
 
+
     }
 
-    private  File getDir() {
-        File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
-        return new File (dir, "iReport_Photo");
+    public void startCameraPreview() {
+
+        if(checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            cameraPreview();
+        } else {
+            String[] cameraPermissionRequest = {Manifest.permission.CAMERA};
+            requestPermissions(cameraPermissionRequest, CAMERA_PERMISSION_REQUEST_CODE);
+        }
+
+
     }
 
-    Camera.PictureCallback jpegCallback = new Camera.PictureCallback() {
-        @Override
-        public void onPictureTaken(byte[] data, Camera camera) {
-            FileOutputStream outputStream = null;
-            File imageFile = getDir();
-            if(!imageFile.exists() && !imageFile.mkdirs()) {
-                Toast.makeText(getApplicationContext(), "cant't create directory to save Image.", Toast.LENGTH_LONG)
-                .show();
-                return;
+    private void cameraPreview() {
+        if(!previewing) {
+            camera = camera.open();
+            if(camera != null) {
+                try {
+                    camera.setPreviewDisplay(cameraSurfaceHolder);
+                    camera.startPreview();
+                    previewing = true;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyymmddhhmmss");
-            String date = simpleDateFormat.format(new Date());
-            String pictureFile = "Ireport" + date + ".jpg";
-            String pictureFileName = imageFile.getAbsolutePath() + "/" + pictureFile;
-            File picFile = new File(pictureFileName);
-            try {
-                outputStream = new FileOutputStream(picFile);
-                outputStream.write(data);
-                outputStream.close();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-
-            }
-            Toast.makeText(getApplicationContext(), "Picture saved", Toast.LENGTH_LONG)
-                 .show();
-            refreshCamera();
-            refreshGallery(picFile);
         }
-    };
-
-    // refresh gallery
-    private void refreshGallery (File file) {
-        Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        intent.setData(Uri.fromFile(file));
-        sendBroadcast(intent);
-    }
-
-    public void refreshCamera () {
-        if(cameraSurfaceHolder.getSurface() == null) {
-            // Preview surface does not exist
-            return;
-        }
-
-        // Stop preview before making changes
-        try {
-            camera.stopPreview();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        // Start preview with new settings
-        try {
-            camera.setPreviewDisplay(cameraSurfaceHolder);
-            camera.startPreview();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void cameraImage() {
-        camera.takePicture(null, null, jpegCallback);
     }
 
     @Override
-    public void surfaceCreated(SurfaceHolder holder) {
-        // Open the camera
-        try {
-            camera.open();
-        } catch(RuntimeException e) {
-            e.printStackTrace();
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if(requestCode == CAMERA_PERMISSION_REQUEST_CODE) {
+            if(grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if(!previewing) {
+                    camera = camera.open();
+                    if(camera != null) {
+                        try {
+                            camera.setPreviewDisplay(cameraSurfaceHolder);
+                            camera.startPreview();
+                            previewing = true;
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            } else {
+                Toast.makeText(getApplicationContext(), "Failed to get permission", Toast.LENGTH_LONG)
+                     .show();
+            }
         }
-        Camera.Parameters cameraParameters;
-        cameraParameters = camera.getParameters();
-        //cameraParameters.setPreviewFrameRate(20);
-        cameraParameters.setPreviewSize(100, 100);
-        camera.setParameters(cameraParameters);
-        camera.setDisplayOrientation(90);
+    }
 
-        try {
-            camera.setPreviewDisplay(cameraSurfaceHolder);
-            camera.startPreview();
-        } catch (Exception e) {
-            e.printStackTrace();
+    public void stopCameraPreview() {
+        if(camera != null && previewing) {
+            camera.stopPreview();
+            camera.release();
+            camera = null;
+            previewing = false;
         }
     }
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-        refreshCamera();
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void surfaceCreated(SurfaceHolder holder) {
+        startCameraPreview();
+        // TODO Auto-generated method stub
+
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        camera.stopPreview();
-        camera.release();
-        camera = null;
+        // TODO Auto-generated method stub
+
     }
 
+    /* Google place Picker */
     public void startPlacePickerActivity() {
         PlacePicker.IntentBuilder intentBuilder = new PlacePicker.IntentBuilder();
         try {
