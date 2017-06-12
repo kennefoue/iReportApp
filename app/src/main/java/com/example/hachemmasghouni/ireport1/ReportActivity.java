@@ -105,6 +105,7 @@ public class ReportActivity extends AppCompatActivity implements SurfaceHolder.C
 
     }
 
+    /* Camera surface view */
     public void startCameraPreview() {
 
         if(checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
