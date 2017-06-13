@@ -44,23 +44,15 @@ import java.util.jar.*;
 }  */
 
 
-public class ReportActivity extends AppCompatActivity implements SurfaceHolder.Callback {
+public class ReportActivity extends AppCompatActivity  {
 
-    public static final int CAMERA_PERMISSION_REQUEST_CODE = 8675309;
-    public static final int EXTERNAL_STORAGE_REQUEST_CODE = 902349;
+
     private final int REQUEST_CODE_PLACEPICKER = 1;
 
     private ImageView getLocationIv;
     private TextView pickerResult;
 
-    Camera camera;
-    SurfaceView cameraSurfaceView;
-    SurfaceHolder cameraSurfaceHolder;
-    FloatingActionButton btnTakePicture;
-    ImageView ivFullScreenCamera;
-    ImageView ivCameraPreview;
-    boolean previewing = false;
-    String stringPath = "/sdcard/sampleVideo.3gp";
+
 
 
 
@@ -76,11 +68,7 @@ public class ReportActivity extends AppCompatActivity implements SurfaceHolder.C
         // Place Picker
         getLocationIv = (ImageView) findViewById(R.id.iv_get_location);
         pickerResult = (TextView) findViewById(R.id.result_text_location);
-        // Camera Preview
-        cameraSurfaceView = (SurfaceView) findViewById(R.id.srfcv_camera);
-        btnTakePicture = (FloatingActionButton) findViewById(R.id.btn_take_photo);
-        ivFullScreenCamera = (ImageView) findViewById(R.id.iv_fullscreen);
-        ivCameraPreview = (ImageView) findViewById(R.id.iv_preview);
+
 
         /* Google Place Picker */
         getLocationIv.setOnClickListener(new View.OnClickListener() {
@@ -90,192 +78,10 @@ public class ReportActivity extends AppCompatActivity implements SurfaceHolder.C
             }
         });
 
-        /* Camera surface View */
-        getWindow().setFormat(PixelFormat.UNKNOWN);
-        cameraSurfaceView = (SurfaceView) findViewById(R.id.srfcv_camera);
-        cameraSurfaceHolder = cameraSurfaceView.getHolder();
-        cameraSurfaceHolder.addCallback(this);
-        cameraSurfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-
-        btnTakePicture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                takePicture();
-            }
-        });
 
 
     }
 
-    /* Camera surface view */
-    public void takePicture() {
-        camera.takePicture(null, null, jpegCallback);
-    }
-
-    private void createDirAfterPermission() {
-        if(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            createDir();
-        } else {
-            String[] externalStoragePermission = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
-            requestPermissions(externalStoragePermission, EXTERNAL_STORAGE_REQUEST_CODE);
-        }
-
-    }
-
-    private void createDir() {
-        File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
-        new File(dir, "iReport_Pictures");
-
-    }
-
-    private void refreshGallery (File file) {
-        Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        intent.setData(Uri.fromFile(file));
-        sendBroadcast(intent);
-    }
-
-    public void refreshCamera () {
-        if(cameraSurfaceHolder.getSurface() == null) {
-            // Preview surface does not exist
-            return;
-        }
-
-        // Stop preview before making changes
-        try {
-            camera.stopPreview();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        // Start preview with new settings
-        try {
-            camera.setPreviewDisplay(cameraSurfaceHolder);
-            camera.startPreview();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    Camera.PictureCallback jpegCallback = new Camera.PictureCallback() {
-
-        @Override
-        public void onPictureTaken(byte[] data, Camera camera) {
-            FileOutputStream outputStream = null;
-            createDirAfterPermission();
-            File imageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM + "/iReport_Pictures" );
-            if(!imageDir.exists() && !imageDir.mkdirs()) {
-                Toast.makeText(getApplicationContext(), "Can't Create Directory to save Image", Toast.LENGTH_LONG)
-                     .show();
-                refreshCamera();
-            } else {
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyymmddhhmmss");
-                String date = simpleDateFormat.format(new Date());
-                String pictureFile = "iReport" + date + ".jpg";
-                String pictureFileName = imageDir.getAbsolutePath() + "/" + pictureFile;
-                File picFile = new File(pictureFileName);
-                try {
-                    outputStream = new FileOutputStream(picFile);
-                    outputStream.write(data);
-                    outputStream.close();
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } finally {
-
-                }
-                Toast.makeText(getApplicationContext(), "Picture saved", Toast.LENGTH_LONG)
-                        .show();
-                refreshCamera();
-                refreshGallery(picFile);
-            }
-        }
-    };
-
-    public void startCameraPreview() {
-
-        if(checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-            cameraPreview();
-        } else {
-            String[] cameraPermissionRequest = {Manifest.permission.CAMERA};
-            requestPermissions(cameraPermissionRequest, CAMERA_PERMISSION_REQUEST_CODE);
-        }
-
-
-    }
-
-    private void cameraPreview() {
-        if(!previewing) {
-            camera = camera.open();
-            if(camera != null) {
-                try {
-                    camera.setPreviewDisplay(cameraSurfaceHolder);
-                    camera.startPreview();
-                    previewing = true;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if(requestCode == CAMERA_PERMISSION_REQUEST_CODE) {
-            if(grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                if(!previewing) {
-                    camera = camera.open();
-                    if(camera != null) {
-                        try {
-                            camera.setPreviewDisplay(cameraSurfaceHolder);
-                            camera.startPreview();
-                            previewing = true;
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            } else {
-                Toast.makeText(getApplicationContext(), "Failed to get permission", Toast.LENGTH_LONG)
-                     .show();
-            }
-        } else if (requestCode == EXTERNAL_STORAGE_REQUEST_CODE) {
-            if(grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                createDir();
-            } else {
-                Toast.makeText(getApplicationContext(), "can't create directory without permission", Toast.LENGTH_LONG);
-            }
-        }
-    }
-
-    public void stopCameraPreview() {
-        if(camera != null && previewing) {
-            camera.stopPreview();
-            camera.release();
-            camera = null;
-            previewing = false;
-        }
-    }
-
-    @Override
-    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void surfaceCreated(SurfaceHolder holder) {
-        startCameraPreview();
-
-    }
-
-    @Override
-    public void surfaceDestroyed(SurfaceHolder holder) {
-        stopCameraPreview();
-        camera.release();
-        camera = null;
-        previewing = false;
-    }
 
     /* Google place Picker */
     public void startPlacePickerActivity() {
@@ -301,7 +107,7 @@ public class ReportActivity extends AppCompatActivity implements SurfaceHolder.C
         pickerResult.setVisibility(View.VISIBLE);
     }
 
-
+    /* TODO: The app crash when pressing the switch button; check this... */
 
 }
 
