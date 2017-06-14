@@ -1,37 +1,18 @@
 package com.example.hachemmasghouni.ireport1;
 
-import android.*;
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.PixelFormat;
-import android.hardware.Camera;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.vision.CameraSource;
-import com.melnykov.fab.FloatingActionButton;
+
+
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.net.DatagramPacket;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.jar.*;
+
 
 
 //public class ReportActivity extends AppCompatActivity {
@@ -44,20 +25,14 @@ import java.util.jar.*;
 }  */
 
 
-public class ReportActivity extends AppCompatActivity  {
+public class ReportActivity extends AppCompatActivity implements CameraSurfaceViewFragment.onAllPictureTaked {
 
 
     private final int REQUEST_CODE_PLACEPICKER = 1;
 
+
     private ImageView getLocationIv;
     private TextView pickerResult;
-
-
-
-
-
-
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,6 +43,7 @@ public class ReportActivity extends AppCompatActivity  {
         // Place Picker
         getLocationIv = (ImageView) findViewById(R.id.iv_get_location);
         pickerResult = (TextView) findViewById(R.id.result_text_location);
+        // Camera fragment
 
 
         /* Google Place Picker */
@@ -78,10 +54,20 @@ public class ReportActivity extends AppCompatActivity  {
             }
         });
 
-
-
     }
 
+
+
+    /* Start fragment transaction when all pictures a taked.
+         * this implement a interface of the class CameraSurfaceViewFragment */
+    @Override
+    public void changeFragement() {
+        PicturesPreviewFragment picFragment = new PicturesPreviewFragment();
+        android.app.FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_report_activity, picFragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
 
     /* Google place Picker */
     public void startPlacePickerActivity() {
@@ -107,7 +93,10 @@ public class ReportActivity extends AppCompatActivity  {
         pickerResult.setVisibility(View.VISIBLE);
     }
 
-    /* TODO: The app crash when pressing the switch button; check this... */
+
+
+    /* TODO: The app crash when pressing the switch button; check this... FIXED... but */
+    /* TODO: must desinstall app before runing to get camera worked.*/
 
 }
 

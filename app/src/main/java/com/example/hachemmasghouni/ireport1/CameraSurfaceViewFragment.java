@@ -1,8 +1,7 @@
 package com.example.hachemmasghouni.ireport1;
 
-import android.*;
 import android.Manifest;
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.PixelFormat;
@@ -35,6 +34,8 @@ public class CameraSurfaceViewFragment extends Fragment implements SurfaceHolder
 
     public static final int CAMERA_PERMISSION_REQUEST_CODE = 8675309;
     public static final int EXTERNAL_STORAGE_REQUEST_CODE = 902349;
+    private final int NUMBER_OF_PICTURE = 3;
+    private int TAKED_PICTURES = 0;
 
     Camera camera;
     SurfaceView cameraSurfaceView;
@@ -43,6 +44,7 @@ public class CameraSurfaceViewFragment extends Fragment implements SurfaceHolder
     ImageView ivFullScreenCamera;
     ImageView ivCameraPreview;
     boolean previewing = false;
+    onAllPictureTaked allPictureTaked;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,8 +71,29 @@ public class CameraSurfaceViewFragment extends Fragment implements SurfaceHolder
             }
         });
 
+        Activity parentActivity = (ReportActivity) getActivity();
+
+
         return v;
 
+    }
+
+
+
+    /* Communication with Activity when all the pictures are taked */
+    public interface onAllPictureTaked {
+        public void changeFragement();
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            allPictureTaked = (onAllPictureTaked) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                                          + " must Implement Interface Method");
+        }
     }
 
     /* Camera surface view */
@@ -152,13 +175,20 @@ public class CameraSurfaceViewFragment extends Fragment implements SurfaceHolder
                 }
                 Toast.makeText(getContext(), "Picture saved", Toast.LENGTH_LONG)
                         .show();
+                TAKED_PICTURES++;
+                if(TAKED_PICTURES == NUMBER_OF_PICTURE) {
+                    allPictureTaked.changeFragement();
+                    TAKED_PICTURES = 0;
+                    stopCameraPreview();
+
+                }
                 refreshCamera();
                 refreshGallery(picFile);
             }
         }
     };
 
-    public void startCameraPreview() {
+    public void startCameraPreviewAfterPermission() {
 
         if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
             cameraPreview();
@@ -173,6 +203,10 @@ public class CameraSurfaceViewFragment extends Fragment implements SurfaceHolder
     private void cameraPreview() {
         if(!previewing) {
             camera = camera.open();
+            Camera.Parameters cameraParameters = camera.getParameters();
+            cameraParameters.setRotation(180);
+            camera.setParameters(cameraParameters);
+            camera.setDisplayOrientation(90);
             if(camera != null) {
                 try {
                     camera.setPreviewDisplay(cameraSurfaceHolder);
@@ -225,22 +259,19 @@ public class CameraSurfaceViewFragment extends Fragment implements SurfaceHolder
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-        // TODO Auto-generated method stub
+        stopCameraPreview();
 
     }
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        startCameraPreview();
+        startCameraPreviewAfterPermission();
 
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         stopCameraPreview();
-        camera.release();
-        camera = null;
-        previewing = false;
     }
 
 

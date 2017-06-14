@@ -18,8 +18,6 @@
             android:id="@+id/textView"
             android:layout_width="146dp"
             android:layout_height="73dp"
-            android:layout_marginLeft="122dp"
-            android:layout_marginStart="122dp"
             android:layout_marginTop="16dp"
             android:fontFamily="cursive"
             android:text="@string/app_name"
@@ -27,11 +25,13 @@
             android:textColor="@color/icons"
             android:textSize="48sp"
             android:textStyle="bold"
-            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_constraintLeft_creator="1"
             tools:layout_constraintTop_creator="1"
-            tools:mockup="@style/Animation.AppCompat.Dialog" />
+            tools:mockup="@style/Animation.AppCompat.Dialog"
+            tools:layout_constraintRight_creator="1"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent" />
 
         <com.hitomi.cmlibrary.CircleMenu
             android:id="@+id/circle_menu"
