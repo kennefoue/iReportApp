@@ -27,6 +27,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -45,6 +46,7 @@ public class CameraSurfaceViewFragment extends Fragment implements SurfaceHolder
     ImageView ivCameraPreview;
     boolean previewing = false;
     onAllPictureTaked allPictureTaked;
+    ArrayList<byte[]> imagesDataList = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -81,8 +83,13 @@ public class CameraSurfaceViewFragment extends Fragment implements SurfaceHolder
 
 
     /* Communication with Activity when all the pictures are taked */
+    public void getImageData(byte[] data) {
+        imagesDataList.add(data);
+    }
+
     public interface onAllPictureTaked {
         public void changeFragement();
+        public void getImageDataList(ArrayList<byte[]> dataList);
     }
 
     @Override
@@ -149,6 +156,7 @@ public class CameraSurfaceViewFragment extends Fragment implements SurfaceHolder
 
         @Override
         public void onPictureTaken(byte[] data, Camera camera) {
+            getImageData(data);
             FileOutputStream outputStream = null;
             createDirAfterPermission();
             File imageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM + "/iReport_Pictures" );
@@ -177,6 +185,7 @@ public class CameraSurfaceViewFragment extends Fragment implements SurfaceHolder
                         .show();
                 TAKED_PICTURES++;
                 if(TAKED_PICTURES == NUMBER_OF_PICTURE) {
+                    allPictureTaked.getImageDataList(imagesDataList);
                     allPictureTaked.changeFragement();
                     TAKED_PICTURES = 0;
                     stopCameraPreview();

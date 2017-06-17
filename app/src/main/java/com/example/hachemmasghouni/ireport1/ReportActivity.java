@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
-
+import java.util.ArrayList;
 
 
 //public class ReportActivity extends AppCompatActivity {
@@ -33,6 +33,7 @@ public class ReportActivity extends AppCompatActivity implements CameraSurfaceVi
 
     private ImageView getLocationIv;
     private TextView pickerResult;
+    private ArrayList<byte[]> imageDataList = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,11 +59,22 @@ public class ReportActivity extends AppCompatActivity implements CameraSurfaceVi
 
 
 
-    /* Start fragment transaction when all pictures a taked.
-         * this implement a interface of the class CameraSurfaceViewFragment */
+    /* Start fragment transaction when all pictures a taked. */
+    // get the taked image for the preview
+    @Override
+    public void getImageDataList(ArrayList<byte[]> dataList) {
+        imageDataList = dataList;
+    }
+
+    // this implement a interface of the class CameraSurfaceViewFragment
     @Override
     public void changeFragement() {
+        Bundle imgBundle = new Bundle();
+        imgBundle.putByteArray("img1", imageDataList.get(0));
+        imgBundle.putByteArray("img2", imageDataList.get(1));
+        imgBundle.putByteArray("img3", imageDataList.get(2));
         PicturesPreviewFragment picFragment = new PicturesPreviewFragment();
+        picFragment.setArguments(imgBundle);
         android.app.FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_report_activity, picFragment);
         fragmentTransaction.addToBackStack(null);
