@@ -60,7 +60,8 @@ public class LoginActivity extends AppCompatActivity {
                                 dashboardIntent.putExtra("mobile", mobile);
 
                                 LoginActivity.this.startActivity(dashboardIntent);
-                            } else {
+                            }
+                            else {
                                 AlertDialog.Builder alertBuilder = new AlertDialog.Builder(LoginActivity.this);
                                 alertBuilder.setMessage("Login Failed")
                                         .setNegativeButton("Retry", null)

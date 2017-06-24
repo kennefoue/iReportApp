@@ -18,7 +18,7 @@ public class Dashboard extends AppCompatActivity {
     String arrayName[] = {
             "Report",
             "Last reports",
-            "Approved reports",
+            //"Approved reports",
             "Advices",
 
     };
@@ -54,12 +54,12 @@ public class Dashboard extends AppCompatActivity {
                                 startActivity(i0);
                                 break;
 
-                            //other cases (1,2) need to be implemented depending on what we're going to define
+                            //other cases (3,2...) need to be implemented depending on what we're going to define
 
-                            case 3:
+                            case 1:
                                 Toast.makeText(Dashboard.this, "Welcome to advices", Toast.LENGTH_SHORT).show();
-                                Intent i3 = new Intent(Dashboard.this, AdvicesActivity.class);
-                                startActivity(i3);
+                                Intent i1 = new Intent(Dashboard.this, AdvicesActivity.class);
+                                startActivity(i1);
                                 break;
 
                         }
