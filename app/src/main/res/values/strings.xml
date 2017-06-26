@@ -3,6 +3,7 @@
     <string name="slogan">be the city Hero !</string>
     <string name="Dashboard">Dashboard</string>
     <string name="Register">Register</string>
+    <string name="Signup">No account? Sign Up Here</string>
     <string name="Name">Name</string>
     <string name="Birthday">Birthday</string>
     <string name="IBAN">IBAN</string>
@@ -44,10 +45,10 @@
     <string name="text_about">About</string>
     <string name="text_log_out">Log out</string>
     <string-array name="arr_report_typ">
-        <item>Unfall</item>
-        <item>Defekte Lichte</item>
-        <item>Kaputte Mülltonne</item>
-        <item>Falsch geparkt</item>
+        <item>Accident</item>
+        <item>Defect Glowlights</item>
+        <item>Defect Trash</item>
+        <item>Wrong parked</item>
     </string-array>
     <string-array name="userchoise_list">
         <item>Sign In</item>
