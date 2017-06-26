@@ -17,7 +17,7 @@ public class AdvicesActivity extends AppCompatActivity {
     ViewPager pager;
     ViewPagerAdapter adapter;
     SlidingTabLayout tabs;
-    CharSequence Titles[]={"Advice1","Advice2", "Advice3", "Settings"};
+    CharSequence Titles[]={"Advice1","Advice2", "Advice3"};
     int Numboftabs =3;
 
     @Override
