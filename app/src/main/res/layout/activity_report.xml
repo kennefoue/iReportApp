@@ -127,21 +127,21 @@
             android:layout_marginEnd="5dp" />
 
         <EditText
-            android:id="@+id/textView15"
-            android:hint="@string/text_reference"
-            android:textColorHint="@color/cardview_dark_background"
+            android:id="@+id/et_reference"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/default_hint_size"
-            android:gravity="center"
             android:layout_marginTop="5dp"
-            app:layout_constraintTop_toBottomOf="@+id/h_bar2"
+            android:gravity="center"
+            android:hint="@string/text_reference"
+            android:textColorHint="@color/cardview_dark_background"
+            android:textSize="@dimen/default_hint_size"
+            app:layout_constraintLeft_toLeftOf="@+id/h_bar2"
             app:layout_constraintRight_toRightOf="@+id/h_bar2"
-            app:layout_constraintLeft_toLeftOf="@+id/h_bar2" />
+            app:layout_constraintTop_toBottomOf="@+id/h_bar2" />
 
 
         <Button
-            android:id="@+id/button9"
+            android:id="@+id/btn_send_report"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/button10"

@@ -4,15 +4,26 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
-
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Map;
 
 
 //public class ReportActivity extends AppCompatActivity {
@@ -21,7 +32,7 @@ import java.util.ArrayList;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report);
-    }
+    }hasg
 }  */
 
 
@@ -33,7 +44,12 @@ public class ReportActivity extends AppCompatActivity implements CameraSurfaceVi
 
     private ImageView getLocationIv;
     private TextView pickerResult;
+    Place placeSelected;
+    private EditText etReference;
+    private Button btnSendReport;
     private ArrayList<byte[]> imageDataList = new ArrayList<>();
+    private String reportRef;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,13 +57,15 @@ public class ReportActivity extends AppCompatActivity implements CameraSurfaceVi
         setContentView(R.layout.activity_report);
 
         /* find views by Ids */
-        // Place Picker
+        // Google Place Picker
         getLocationIv = (ImageView) findViewById(R.id.iv_get_location);
         pickerResult = (TextView) findViewById(R.id.result_text_location);
-        // Camera fragment
+        // Report
+        etReference = (EditText) findViewById(R.id.et_reference);
+        btnSendReport = (Button) findViewById(R.id.btn_send_report);
 
-
-        /* Google Place Picker */
+        /* Set Listeners */
+        // Google place picker
         getLocationIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,6 +73,40 @@ public class ReportActivity extends AppCompatActivity implements CameraSurfaceVi
             }
         });
 
+        // Report
+        btnSendReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO impelement the logic after SendReportRequest - Done
+                Double reportLat = placeSelected.getLatLng().latitude;
+                Double reportLon = placeSelected.getLatLng().longitude;
+                reportRef = etReference.getText().toString();
+
+                Response.Listener<String> responseListener = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonResponce = new JSONObject(response);
+                            boolean success = jsonResponce.getBoolean("success");
+                            if(success) {
+                                Toast.makeText(getBaseContext(), "Report Send", Toast.LENGTH_LONG);
+                            } else {
+                                Toast.makeText(getBaseContext(), "Failed to Report", Toast.LENGTH_LONG);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+                try {
+                    SendReportRequest reportRequest = new SendReportRequest(imageDataList, reportLat, reportLon, reportRef, responseListener);
+                    RequestQueue queue = Volley.newRequestQueue(ReportActivity.this);
+                    queue.add(reportRequest);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
 
@@ -66,7 +118,7 @@ public class ReportActivity extends AppCompatActivity implements CameraSurfaceVi
         imageDataList = dataList;
     }
 
-    // this implement a interface of the class CameraSurfaceViewFragment
+    // implementation of the cameraSurfaceViewFragment interface for the communication
     @Override
     public void changeFragement() {
         Bundle imgBundle = new Bundle();
@@ -100,7 +152,7 @@ public class ReportActivity extends AppCompatActivity implements CameraSurfaceVi
     }
 
     private void displaySelectedPlaceFromPlacePicker(Intent data){
-        Place placeSelected = PlacePicker.getPlace(data, this);
+        placeSelected = PlacePicker.getPlace(data, this);
         pickerResult.setText(placeSelected.getAddress().toString());
         pickerResult.setVisibility(View.VISIBLE);
     }
