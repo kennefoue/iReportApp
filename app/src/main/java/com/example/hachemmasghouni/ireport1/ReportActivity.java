@@ -89,9 +89,11 @@ public class ReportActivity extends AppCompatActivity implements CameraSurfaceVi
                             JSONObject jsonResponce = new JSONObject(response);
                             boolean success = jsonResponce.getBoolean("success");
                             if(success) {
-                                Toast.makeText(getBaseContext(), "Report Send", Toast.LENGTH_LONG);
+                                Toast.makeText(getApplicationContext(), "Report Send", Toast.LENGTH_LONG)
+                                     .show();
                             } else {
-                                Toast.makeText(getBaseContext(), "Failed to Report", Toast.LENGTH_LONG);
+                                Toast.makeText(getApplicationContext(), "Failed to Report", Toast.LENGTH_LONG)
+                                     .show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
