@@ -59,7 +59,7 @@ public class CameraSurfaceViewFragment extends Fragment implements SurfaceHolder
         ivFullScreenCamera = (ImageView) v.findViewById(R.id.iv_fullscreen);
         ivCameraPreview = (ImageView) v.findViewById(R.id.iv_preview);
 
-                /* Camera surface View */
+        /* Camera surface View */
         getActivity().getWindow().setFormat(PixelFormat.UNKNOWN);
         cameraSurfaceView = (SurfaceView) v.findViewById(R.id.srfcv_camera);
         cameraSurfaceHolder = cameraSurfaceView.getHolder();
@@ -87,6 +87,7 @@ public class CameraSurfaceViewFragment extends Fragment implements SurfaceHolder
         imagesDataList.add(data);
     }
 
+    // Interface for the communication
     public interface onAllPictureTaked {
         public void changeFragement();
         public void getImageDataList(ArrayList<byte[]> dataList);
@@ -157,6 +158,8 @@ public class CameraSurfaceViewFragment extends Fragment implements SurfaceHolder
         @Override
         public void onPictureTaken(byte[] data, Camera camera) {
             getImageData(data);
+            // TODO cancel image save and send it direct to the server and delete all related functions
+            // TODO optimise php files on server to write image name on table and upload image
             FileOutputStream outputStream = null;
             createDirAfterPermission();
             File imageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM + "/iReport_Pictures" );
@@ -197,6 +200,7 @@ public class CameraSurfaceViewFragment extends Fragment implements SurfaceHolder
         }
     };
 
+    // TODO implement a function to give advice to user
     public void startCameraPreviewAfterPermission() {
 
         if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
