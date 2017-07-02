@@ -7,6 +7,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.sql.Blob;
 import java.util.ArrayList;
 
 /**
@@ -33,9 +34,10 @@ public class ReportDataObject {
         return Integer.toString(userId);
     }
 
-    public String getImgDataString(int index) {
-        return Base64.encodeToString(this.imagesDataList.get(index), Base64.DEFAULT);
+    public String getImgDataString(byte[] img) {
+        return Base64.encodeToString(img, Base64.DEFAULT);
     }
+
 
     public String getLatString() {
         return Double.toString(this.lat);
@@ -51,14 +53,17 @@ public class ReportDataObject {
 
     public JSONObject  getJsonObj() {
         JSONObject jsonObj = new JSONObject();
+        byte[] img1 = imagesDataList.get(0);
+        byte[] img2 = imagesDataList.get(1);
+        byte[] img3 = imagesDataList.get(2);
         try {
             jsonObj.put("userId", userId);
             jsonObj.put("latitude", lat);
             jsonObj.put("longitude", lon);
             jsonObj.put("reference", ref);
-            jsonObj.put("image1", imagesDataList.get(0));
-            jsonObj.put("image2", imagesDataList.get(1));
-            jsonObj.put("image3", imagesDataList.get(2));
+            jsonObj.put("image1", getImgDataString(img1));
+            jsonObj.put("image2", getImgDataString(img2));
+            jsonObj.put("image3", getImgDataString(img3));
         } catch(JSONException e){
             e.printStackTrace();
         }
