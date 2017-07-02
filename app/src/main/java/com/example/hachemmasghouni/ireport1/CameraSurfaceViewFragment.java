@@ -22,6 +22,9 @@ import android.widget.Toast;
 
 import com.melnykov.fab.FloatingActionButton;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -47,6 +50,7 @@ public class CameraSurfaceViewFragment extends Fragment implements SurfaceHolder
     boolean previewing = false;
     onAllPictureTaked allPictureTaked;
     ArrayList<byte[]> imagesDataList = new ArrayList<>();
+    ArrayList<String> imagesNames = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -87,11 +91,13 @@ public class CameraSurfaceViewFragment extends Fragment implements SurfaceHolder
         imagesDataList.add(data);
     }
 
-    // Interface for the communication
+    // Interface for the communication with
     public interface onAllPictureTaked {
         public void changeFragement();
         public void getImageDataList(ArrayList<byte[]> dataList);
+        public  void getImagesNames(ArrayList<String> names);
     }
+
 
     @Override
     public void onAttach(Activity activity) {
@@ -157,50 +163,33 @@ public class CameraSurfaceViewFragment extends Fragment implements SurfaceHolder
 
         @Override
         public void onPictureTaken(byte[] data, Camera camera) {
-            getImageData(data);
-            // TODO cancel image save and send it direct to the server and delete all related functions
             // TODO optimise php files on server to write image name on table and upload image
-            FileOutputStream outputStream = null;
-            createDirAfterPermission();
-            File imageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM + "/iReport_Pictures" );
-            if(!imageDir.exists() && !imageDir.mkdirs()) {
-                Toast.makeText(getContext(), "Can't Create Directory to save Image", Toast.LENGTH_LONG)
-                        .show();
-                refreshCamera();
+            // get image data
+            getImageData(data);
+
+            // Generate unique image name using time stamp
+            // TODO LATER include user id in image name to increase his unicity by multi user
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyymmddhhss");
+            String imgName = simpleDateFormat.format(new Date());
+            imagesNames.add(imgName);
+            Toast.makeText(getContext(), "Image take and Cached", Toast.LENGTH_SHORT)
+                 .show();
+            // Begin fragment transaction with image data after 3 pictures
+            TAKED_PICTURES++;
+            if(TAKED_PICTURES == NUMBER_OF_PICTURE) {
+
+                // TODO implement method to guide the user with the picture
+                allPictureTaked.getImageDataList(imagesDataList);
+                allPictureTaked.getImagesNames(imagesNames);
+                allPictureTaked.changeFragement();
+                TAKED_PICTURES = 0;
+                stopCameraPreview();
             } else {
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyymmddhhmmss");
-                String date = simpleDateFormat.format(new Date());
-                String pictureFile = "iReport" + date + ".jpg";
-                String pictureFileName = imageDir.getAbsolutePath() + "/" + pictureFile;
-                File picFile = new File(pictureFileName);
-                try {
-                    outputStream = new FileOutputStream(picFile);
-                    outputStream.write(data);
-                    outputStream.close();
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } finally {
-
-                }
-                Toast.makeText(getContext(), "Picture saved", Toast.LENGTH_LONG)
-                        .show();
-                TAKED_PICTURES++;
-                if(TAKED_PICTURES == NUMBER_OF_PICTURE) {
-                    allPictureTaked.getImageDataList(imagesDataList);
-                    allPictureTaked.changeFragement();
-                    TAKED_PICTURES = 0;
-                    stopCameraPreview();
-
-                }
                 refreshCamera();
-                refreshGallery(picFile);
             }
         }
     };
 
-    // TODO implement a function to give advice to user
     public void startCameraPreviewAfterPermission() {
 
         if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {

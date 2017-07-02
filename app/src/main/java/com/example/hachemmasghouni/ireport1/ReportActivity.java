@@ -34,6 +34,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.sql.Array;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -68,6 +69,7 @@ public class ReportActivity extends AppCompatActivity implements CameraSurfaceVi
     private EditText etReference;
     private Button btnSendReport;
     private ArrayList<byte[]> imageDataList = new ArrayList<>();
+    private ArrayList<String> imagesNames = new ArrayList<>();
     private String reportRef;
 
 
@@ -99,12 +101,12 @@ public class ReportActivity extends AppCompatActivity implements CameraSurfaceVi
         btnSendReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO impelement the logic after SendReportRequest - Done
                 Double reportLat = placeSelected.getLatLng().latitude;
                 Double reportLon = placeSelected.getLatLng().longitude;
                 reportRef = etReference.getText().toString();
 
-                new UploadImage("haha", "hoho", "hihi", imageDataList, applicationContext).execute();
+                // Upload image in Background using Http Protocol
+                new UploadImage(imagesNames, imageDataList, applicationContext).execute();
 
 
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
@@ -158,6 +160,11 @@ public class ReportActivity extends AppCompatActivity implements CameraSurfaceVi
         fragmentTransaction.replace(R.id.fragment_report_activity, picFragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
+    }
+
+    @Override
+    public void getImagesNames(ArrayList<String> names) {
+        this.imagesNames = names;
     }
 
     /* Google place Picker */
