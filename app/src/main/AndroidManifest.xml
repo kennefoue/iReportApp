@@ -22,7 +22,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Dashboard">
+        <activity android:name=".LoginActivity">
             //define the main screen on Main_activity and add navigation to return on the app bar
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -34,7 +34,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".DashboardActivity" />
         <activity android:name=".ReportActivity" />
         <activity
             android:name=".MainActivity"

@@ -50,15 +50,13 @@ public class LoginActivity extends AppCompatActivity {
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
                             if(success) {
-                                String fullName = jsonResponse.getString("fullName");
-                                String email = jsonResponse.getString("email");
-                                String mobile = jsonResponse.getString("mobile");
+                                // Send user data to dashboard activity
+                                Bundle mBundle = new Bundle();
+                                String jsonResponseString = jsonResponse.toString();
+                                Intent dashboardIntent = new Intent(LoginActivity.this, DashboardActivity.class);
+                                dashboardIntent.putExtra("userData", jsonResponseString);
 
-                                Intent dashboardIntent = new Intent(LoginActivity.this, Dashboard.class);
-                                dashboardIntent.putExtra("fullName", fullName);
-                                dashboardIntent.putExtra("email", email);
-                                dashboardIntent.putExtra("mobile", mobile);
-
+                                // Start dashboard activity
                                 LoginActivity.this.startActivity(dashboardIntent);
                             } else {
                                 AlertDialog.Builder alertBuilder = new AlertDialog.Builder(LoginActivity.this);

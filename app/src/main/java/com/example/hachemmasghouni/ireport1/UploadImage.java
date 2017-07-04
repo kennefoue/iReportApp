@@ -34,7 +34,7 @@ public class UploadImage extends AsyncTask<Void, Void, Void> {
     ArrayList<NameValuePair> dataToSend = new ArrayList<>();
     Context applicationContext;
     Activity activity;
-    ProgressDialog progressDialog;
+    ProgressDialog progressDialog; 
     public UploadImage(ArrayList<String> imagesNames, ArrayList<byte[]> imgDataList, Context ctx, Activity activityCtx) {
         this.imagesNames = imagesNames;
         this.imgDataList = imgDataList;

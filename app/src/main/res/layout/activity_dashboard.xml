@@ -8,7 +8,7 @@
     tools:layout_editor_absoluteX="0dp"
     android:background="@drawable/side_nav_bar"
     android:textColor="@color/icons"
-    tools:context="com.example.hachemmasghouni.ireport1.Dashboard">
+    tools:context="com.example.hachemmasghouni.ireport1.DashboardActivity">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
