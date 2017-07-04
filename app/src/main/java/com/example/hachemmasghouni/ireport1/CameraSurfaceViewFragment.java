@@ -172,10 +172,11 @@ public class CameraSurfaceViewFragment extends Fragment implements SurfaceHolder
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyymmddhhss");
             String imgName = simpleDateFormat.format(new Date());
             imagesNames.add(imgName);
-            Toast.makeText(getContext(), "Image take and Cached", Toast.LENGTH_SHORT)
+            Toast.makeText(getContext(), "Image Shooted", Toast.LENGTH_SHORT)
                  .show();
             // Begin fragment transaction with image data after 3 pictures
             TAKED_PICTURES++;
+            showUserAdvice();
             if(TAKED_PICTURES == NUMBER_OF_PICTURE) {
 
                 // TODO implement method to guide the user with the picture
@@ -189,6 +190,26 @@ public class CameraSurfaceViewFragment extends Fragment implements SurfaceHolder
             }
         }
     };
+
+    public void showUserAdvice() {
+        String advice = "";
+        switch (TAKED_PICTURES) {
+            case 0:
+                advice = "Image 1: Whole situation";
+                break;
+            case 1:
+                advice = "Image 2: Focus on Object";
+                break;
+            case 2:
+                advice = "Image 3: Focus on Reference";
+                break;
+            case 3:
+                advice = "Click on Surface to See Images";
+                break;
+        }
+        Toast.makeText(getContext(), advice, Toast.LENGTH_SHORT)
+             .show();
+    }
 
     public void startCameraPreviewAfterPermission() {
 
@@ -213,6 +234,8 @@ public class CameraSurfaceViewFragment extends Fragment implements SurfaceHolder
                 try {
                     camera.setPreviewDisplay(cameraSurfaceHolder);
                     camera.startPreview();
+                    // Guide the user with the pictures
+                    showUserAdvice();
                     previewing = true;
                 } catch (IOException e) {
                     e.printStackTrace();

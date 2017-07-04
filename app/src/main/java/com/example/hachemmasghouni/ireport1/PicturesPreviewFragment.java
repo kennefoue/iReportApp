@@ -30,6 +30,7 @@ public class PicturesPreviewFragment extends Fragment {
         View v =  inflater.inflate(R.layout.fragment_pictures_preview, container, false);
 
         previewImageView = (ImageView) v.findViewById(R.id.iv_pic_preview);
+        // TODO LATER implement slide listener and image counter
         previewImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

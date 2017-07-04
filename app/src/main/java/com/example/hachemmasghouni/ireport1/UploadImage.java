@@ -24,9 +24,8 @@ import java.util.ArrayList;
 
 public class UploadImage extends AsyncTask<Void, Void, Void> {
 
-    private static final String HTTP_SERVER_ADRESS = "http://kennefoue.000webhostapp.com/";
+    private static final String HTTP_SERVER_ADRESS = "http://kennefoue.000webhostapp.com/iReport_phps/";
 
-    String img1Name, img2Name, img3Name = "";
     ArrayList<byte[]> imgDataList = new ArrayList<>();
     ArrayList<String> imgBaosList = new ArrayList<>();
     ArrayList<String> imagesNames = new ArrayList<>();
@@ -67,6 +66,8 @@ public class UploadImage extends AsyncTask<Void, Void, Void> {
         }
         return null;
     }
+
+    // TODO implement the loader when image are uploading
 
     @Override
     protected void onPostExecute(Void aVoid) {
