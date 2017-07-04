@@ -1,5 +1,7 @@
 package com.example.hachemmasghouni.ireport1;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Base64;
@@ -31,10 +33,13 @@ public class UploadImage extends AsyncTask<Void, Void, Void> {
     ArrayList<String> imagesNames = new ArrayList<>();
     ArrayList<NameValuePair> dataToSend = new ArrayList<>();
     Context applicationContext;
-    public UploadImage(ArrayList<String> imagesNames, ArrayList<byte[]> imgDataList, Context ctx) {
+    Activity activity;
+    ProgressDialog progressDialog;
+    public UploadImage(ArrayList<String> imagesNames, ArrayList<byte[]> imgDataList, Context ctx, Activity activityCtx) {
         this.imagesNames = imagesNames;
         this.imgDataList = imgDataList;
         this.applicationContext = ctx;
+        this.activity = activityCtx;
     }
     @Override
     protected Void doInBackground(Void... params) {
@@ -67,13 +72,24 @@ public class UploadImage extends AsyncTask<Void, Void, Void> {
         return null;
     }
 
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        progressDialog = new ProgressDialog(activity);
+        progressDialog.setTitle("Uploading Image");
+        progressDialog.setMessage("Please Wait...");
+        progressDialog.show();
+
+    }
+
     // TODO implement the loader when image are uploading
 
     @Override
     protected void onPostExecute(Void aVoid) {
-        Toast.makeText(applicationContext, "Image Send To Server", Toast.LENGTH_LONG)
-                .show();
         super.onPostExecute(aVoid);
+        progressDialog.cancel();
+        Toast.makeText(applicationContext, "Image uploaded !", Toast.LENGTH_LONG)
+                .show();
     }
 
     private HttpParams getHttpRequestParams() {

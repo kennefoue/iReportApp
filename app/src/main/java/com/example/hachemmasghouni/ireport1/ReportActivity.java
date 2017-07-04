@@ -1,5 +1,6 @@
 package com.example.hachemmasghouni.ireport1;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,6 +33,7 @@ public class ReportActivity extends AppCompatActivity implements CameraSurfaceVi
     // Upload image
 
     Context applicationContext;
+    Activity activityCtx;
 
 
 
@@ -52,6 +54,7 @@ public class ReportActivity extends AppCompatActivity implements CameraSurfaceVi
         setContentView(R.layout.activity_report);
 
         applicationContext = getApplicationContext();
+        activityCtx = ReportActivity.this;
 
         /* find views by Ids */
         // Google Place Picker
@@ -89,7 +92,7 @@ public class ReportActivity extends AppCompatActivity implements CameraSurfaceVi
                     reportRef = etReference.getText().toString();
 
                     // Upload image in Background using Http Protocol
-                    new UploadImage(imagesNames, imageDataList, applicationContext).execute();
+                    new UploadImage(imagesNames, imageDataList, applicationContext, activityCtx).execute();
 
 
                     Response.Listener<String> responseListener = new Response.Listener<String>() {
