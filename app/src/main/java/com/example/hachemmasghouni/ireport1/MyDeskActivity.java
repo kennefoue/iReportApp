@@ -19,10 +19,12 @@ public class MyDeskActivity extends AppCompatActivity {
         String email = loginIntent.getStringExtra("email");
         String mobile = loginIntent.getStringExtra("mobile");
 
-        String wlcMsg = "Welcome " + fullName + " to your Dashboard" +
+        String wlcMsg = "Welcome " + fullName + " to your DashboardActivity" +
                 "\n" + "Registred Email: " + email + "\n" +
                 "Mobile: " + mobile;
 
         //tWlcMsg.setText(wlcMsg);
     }
+
+
 }
