@@ -19,9 +19,20 @@ import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private AutoLogOn m_session;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        m_session = new AutoLogOn(this);
+//check if session is already onetime before registred then no need to show login screen
+       /* if (m_session.loggedin()){
+            Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            startActivity(intent);
+            finish();
+        }*/
+
         setContentView(R.layout.activity_login);
 
         final EditText etEmail = (EditText) findViewById(R.id.et_email);
@@ -50,14 +61,19 @@ public class LoginActivity extends AppCompatActivity {
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
                             if(success) {
+
+                               /* m_session.setLoggedin(true);
+                                m_session.setName(jsonResponse.getString("email"));
+                                m_session.setMail(jsonResponse.getString("password"));
+                                //m_session.setID(jsonResponse.getInt("user_id"));*/
                                 // Send user data to dashboard activity
                                 Bundle mBundle = new Bundle();
                                 String jsonResponseString = jsonResponse.toString();
-                                Intent dashboardIntent = new Intent(LoginActivity.this, DashboardActivity.class);
-                                dashboardIntent.putExtra("userData", jsonResponseString);
+                                Intent introIntent = new Intent(LoginActivity.this, IntroActivity.class);
+                                introIntent.putExtra("userData", jsonResponseString);
 
                                 // Start dashboard activity
-                                LoginActivity.this.startActivity(dashboardIntent);
+                                LoginActivity.this.startActivity(introIntent);
                             }
                             else {
                                 AlertDialog.Builder alertBuilder = new AlertDialog.Builder(LoginActivity.this);

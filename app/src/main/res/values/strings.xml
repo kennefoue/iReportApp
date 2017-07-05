@@ -58,4 +58,14 @@
         <item>Sign Up</item>
     </string-array>
 
+    <string name="next">Next</string>
+    <string name="skip">Skip</string>
+    <string name="start">Start</string>
+    <string name="title_slide1">Conntect the charge</string>
+    <string name="desc_slide1">Conntect the charge</string>
+    <string name="title_slide2">Conntect the charge</string>
+    <string name="desc_slide2">Conntect the charge</string>
+    <string name="title_slide3">Conntect the charge</string>
+    <string name="desc_slide3">Conntect the charge</string>
+
 </resources>

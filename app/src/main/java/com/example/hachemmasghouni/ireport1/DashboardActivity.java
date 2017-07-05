@@ -26,17 +26,29 @@ public class DashboardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dashboard);
 
         // Get user Data
-        String usrDataStr = getIntent().getExtras().getString("userData");
+
+        //uncommented to test the intro activity
+        /*String usrDataStr = getIntent().getExtras().getString("userData");
         try {
             userData = new JSONObject(usrDataStr);
             userId = userData.getInt("userId");
         } catch (JSONException e) {
             e.printStackTrace();
-        }
+        }*/
+
+        //to call some parametrs from the database
+        //try{
+          //  String fullname =userData.getString("fullname");
+            //        fullnameView.setText(fullname);
+        //} catch (JSONException e){
+        //    e.printStackTrace();
+        //}
 
         // TODO TEST
-        Toast.makeText(getApplicationContext(), usrDataStr, Toast.LENGTH_LONG)
-             .show();
+
+        //uncommented to test the intro activity
+        /*Toast.makeText(getApplicationContext(), usrDataStr, Toast.LENGTH_LONG)
+             .show();*/
 
         // TODO user scalified library instead; see github for dokumentation
         // Circle Menu

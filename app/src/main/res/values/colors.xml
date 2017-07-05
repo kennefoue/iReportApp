@@ -11,4 +11,23 @@
     <color name="icons">#ffffff</color>
     <color name="colorDivider">#BDBDBD</color>
     <color name="tabsScrollColor">#8a140e</color>
+
+    <!-- for the activity intro and the slides -->
+
+    <!--Screens background-->
+
+    <color name="bg_screen1">#41f15b</color>
+    <color name="bg_screen2">#58cc10</color>
+    <color name="bg_screen3">#3eec1c</color>
+
+
+
+    <!--dots active colors-->
+    <color name="dot_active">#000000</color>
+
+
+    <!--dots inaktive colors-->
+    <color name="dot_Inactive">#cccccc</color>
+
+
 </resources>
