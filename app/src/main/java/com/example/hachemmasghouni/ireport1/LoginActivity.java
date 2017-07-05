@@ -58,7 +58,8 @@ public class LoginActivity extends AppCompatActivity {
 
                                 // Start dashboard activity
                                 LoginActivity.this.startActivity(dashboardIntent);
-                            } else {
+                            }
+                            else {
                                 AlertDialog.Builder alertBuilder = new AlertDialog.Builder(LoginActivity.this);
                                 alertBuilder.setMessage("Login Failed")
                                         .setNegativeButton("Retry", null)

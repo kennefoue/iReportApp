@@ -19,6 +19,8 @@ allprojects {
 
         // circle menu
         maven {url "https://jitpack.io"}
+        //Facebook SDK
+        mavenCentral()
     }
 }
 
