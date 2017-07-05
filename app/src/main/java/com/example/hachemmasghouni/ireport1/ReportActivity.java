@@ -34,6 +34,7 @@ public class ReportActivity extends AppCompatActivity implements CameraSurfaceVi
 
     Context applicationContext;
     Activity activityCtx;
+    private int userId;
 
 
 
@@ -56,6 +57,8 @@ public class ReportActivity extends AppCompatActivity implements CameraSurfaceVi
         applicationContext = getApplicationContext();
         activityCtx = ReportActivity.this;
 
+        userId = getIntent().getExtras().getInt("userId");
+
         /* find views by Ids */
         // Google Place Picker
         getLocationIv = (ImageView) findViewById(R.id.iv_get_location);
@@ -77,58 +80,60 @@ public class ReportActivity extends AppCompatActivity implements CameraSurfaceVi
         btnSendReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Double reportLat;
-                Double reportLon;
-                String reportRef;
-
-                //TODO LATER create my custom Exception Class
-                // Check if report data are complete
-                if ( !placeIsSelected || TextUtils.isEmpty(etReference.getText().toString()) || imageDataList.size() == 0 ) {
-                    Toast.makeText(getApplicationContext(), "Data Are not Complete", Toast.LENGTH_LONG)
-                         .show();
-                } else {
-                    reportLat = placeSelected.getLatLng().latitude;
-                    reportLon = placeSelected.getLatLng().longitude;
-                    reportRef = etReference.getText().toString();
-
-                    // Upload image in Background using Http Protocol
-                    new UploadImage(imagesNames, imageDataList, applicationContext, activityCtx).execute();
-
-
-                    Response.Listener<String> responseListener = new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            try {
-                                JSONObject jsonResponce = new JSONObject(response);
-                                boolean success = jsonResponce.getBoolean("success");
-                                if(success) {
-                                    Toast.makeText(getApplicationContext(), "Report Send", Toast.LENGTH_LONG)
-                                            .show();
-                                } else {
-                                    Toast.makeText(getApplicationContext(), "Failed to Report", Toast.LENGTH_LONG)
-                                            .show();
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    };
-                    try {
-                        SendReportRequest reportRequest = new SendReportRequest(reportLat, reportLon, reportRef, imagesNames, responseListener);
-                        RequestQueue queue = Volley.newRequestQueue(ReportActivity.this);
-                        queue.add(reportRequest);
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-
+                sendReport();
             }
         });
     }
 
 
+    public  void sendReport() {
+        Double reportLat;
+        Double reportLon;
+        String reportRef;
 
+        //TODO LATER create my custom Exception Class
+        // TODO close the activity after report send
+        // Check if report data are complete
+        if ( !placeIsSelected || TextUtils.isEmpty(etReference.getText().toString()) || imageDataList.size() == 0 ) {
+            Toast.makeText(getApplicationContext(), "Data Are not Complete", Toast.LENGTH_LONG)
+                    .show();
+        } else {
+            reportLat = placeSelected.getLatLng().latitude;
+            reportLon = placeSelected.getLatLng().longitude;
+            reportRef = etReference.getText().toString();
+
+            // Upload image in Background using Http Protocol
+            new UploadImage(imagesNames, imageDataList, applicationContext, activityCtx).execute();
+
+
+            Response.Listener<String> responseListener = new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    try {
+                        JSONObject jsonResponce = new JSONObject(response);
+                        boolean success = jsonResponce.getBoolean("success");
+                        if(success) {
+                            Toast.makeText(getApplicationContext(), "Report Send", Toast.LENGTH_LONG)
+                                    .show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Failed to Report", Toast.LENGTH_LONG)
+                                    .show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            };
+            try {
+                SendReportRequest reportRequest = new SendReportRequest(userId, reportLat, reportLon, reportRef, imagesNames, responseListener);
+                RequestQueue queue = Volley.newRequestQueue(ReportActivity.this);
+                queue.add(reportRequest);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
     /* Start fragment transaction when all pictures a taked. */
     // get the taked image for the preview
     @Override
@@ -139,12 +144,12 @@ public class ReportActivity extends AppCompatActivity implements CameraSurfaceVi
     // implementation of the cameraSurfaceViewFragment interface for the communication
     @Override
     public void changeFragement() {
-        Bundle imgBundle = new Bundle();
-        imgBundle.putByteArray("img1", imageDataList.get(0));
-        imgBundle.putByteArray("img2", imageDataList.get(1));
-        imgBundle.putByteArray("img3", imageDataList.get(2));
+        Bundle mBundle = new Bundle();
+        mBundle.putByteArray("img1", imageDataList.get(0));
+        mBundle.putByteArray("img2", imageDataList.get(1));
+        mBundle.putByteArray("img3", imageDataList.get(2));
         PicturesPreviewFragment picFragment = new PicturesPreviewFragment();
-        picFragment.setArguments(imgBundle);
+        picFragment.setArguments(mBundle);
         android.app.FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_report_activity, picFragment);
         fragmentTransaction.addToBackStack(null);

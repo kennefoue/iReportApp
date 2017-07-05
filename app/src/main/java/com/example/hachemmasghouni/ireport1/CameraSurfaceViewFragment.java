@@ -40,6 +40,7 @@ public class CameraSurfaceViewFragment extends Fragment implements SurfaceHolder
     public static final int EXTERNAL_STORAGE_REQUEST_CODE = 902349;
     private final int NUMBER_OF_PICTURE = 3;
     private int TAKED_PICTURES = 0;
+    private int userId;
 
     Camera camera;
     SurfaceView cameraSurfaceView;
@@ -57,6 +58,8 @@ public class CameraSurfaceViewFragment extends Fragment implements SurfaceHolder
                              Bundle savedInstanceState) {
         View v =  inflater.inflate(R.layout.fragment_camera_surface_view, container, false);
 
+        userId = getActivity().getIntent().getExtras().getInt("userId");
+
         // Camera Preview
         cameraSurfaceView = (SurfaceView) v.findViewById(R.id.srfcv_camera);
         btnTakePicture = (FloatingActionButton) v.findViewById(R.id.btn_take_photo);
@@ -69,6 +72,8 @@ public class CameraSurfaceViewFragment extends Fragment implements SurfaceHolder
         cameraSurfaceHolder = cameraSurfaceView.getHolder();
         cameraSurfaceHolder.addCallback(this);
         cameraSurfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+
+
 
         btnTakePicture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -163,14 +168,13 @@ public class CameraSurfaceViewFragment extends Fragment implements SurfaceHolder
 
         @Override
         public void onPictureTaken(byte[] data, Camera camera) {
-            // TODO optimise php files on server to write image name on table and upload image
             // get image data
             getImageData(data);
 
             // Generate unique image name using time stamp
-            // TODO LATER include user id in image name to increase his unicity by multi user
+            // TODO LATER increase lisibility of image name with underscore
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyymmddhhss");
-            String imgName = simpleDateFormat.format(new Date());
+            String imgName = userId + "_" + simpleDateFormat.format(new Date());
             imagesNames.add(imgName);
             Toast.makeText(getContext(), "Image Shooted", Toast.LENGTH_SHORT)
                  .show();
@@ -178,8 +182,6 @@ public class CameraSurfaceViewFragment extends Fragment implements SurfaceHolder
             TAKED_PICTURES++;
             showUserAdvice();
             if(TAKED_PICTURES == NUMBER_OF_PICTURE) {
-
-                // TODO implement method to guide the user with the picture
                 allPictureTaked.getImageDataList(imagesDataList);
                 allPictureTaked.getImagesNames(imagesNames);
                 allPictureTaked.changeFragement();

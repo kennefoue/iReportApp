@@ -45,6 +45,7 @@
     <string name="text_profile">Profile</string>
     <string name="text_about">About</string>
     <string name="text_log_out">Log out</string>
+    <string name="text_user_welcome_message">User Welcome Message</string>
     <string-array name="arr_report_typ">
         <item>Unfall</item>
         <item>Defekte Lichte</item>

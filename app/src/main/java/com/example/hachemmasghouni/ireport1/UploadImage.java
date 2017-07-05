@@ -82,8 +82,6 @@ public class UploadImage extends AsyncTask<Void, Void, Void> {
 
     }
 
-    // TODO implement the loader when image are uploading
-
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
