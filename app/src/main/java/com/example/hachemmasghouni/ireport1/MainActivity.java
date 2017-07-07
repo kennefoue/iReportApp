@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void button8(View v){
 
-        Intent intent = new Intent(this, LoginActivity.class);
+        Intent intent = new Intent(this, IntroActivity.class);
         startActivity(intent);
     }
 

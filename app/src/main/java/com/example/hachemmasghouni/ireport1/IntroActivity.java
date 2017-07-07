@@ -137,7 +137,7 @@ public class IntroActivity extends Activity {
     private void launchHomeScreen() {
         //startActivity(new Intent(IntroActivity.this, DashboardActivity.class));
         //JSONObject json = new JSONObject();
-        Intent intent = new Intent(IntroActivity.this, DashboardActivity.class);
+        Intent intent = new Intent(IntroActivity.this, LoginActivity.class);
         //intent.putExtra("userData",json.toString());
         IntroActivity.this.startActivity(intent);
 

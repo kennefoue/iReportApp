@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.common.SignInButton;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,9 +21,12 @@ import org.json.JSONObject;
 public class LoginActivity extends AppCompatActivity {
 
     private AutoLogOn m_session;
+    private SignInButton btnSignIn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
         m_session = new AutoLogOn(this);
 //check if session is already onetime before registred then no need to show login screen
@@ -38,6 +42,8 @@ public class LoginActivity extends AppCompatActivity {
         final EditText etEmail = (EditText) findViewById(R.id.et_email);
         final EditText etPassword = (EditText) findViewById(R.id.et_password);
         Button bLogin = (Button) findViewById(R.id.bLogin);
+        //google button
+        SignInButton btnSignIn = (SignInButton) findViewById(R.id.btn_sign_in);
         TextView tRegisterLink = (TextView) findViewById(R.id.tv_register_link);
 
         tRegisterLink.setOnClickListener(new View.OnClickListener() {
@@ -47,6 +53,15 @@ public class LoginActivity extends AppCompatActivity {
                 LoginActivity.this.startActivity(registerIntent);
             }
         });
+
+        btnSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent googleIntent = new Intent(LoginActivity.this, Google.class);
+                LoginActivity.this.startActivity(googleIntent);
+            }
+        });
+
 
         bLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,19 +76,14 @@ public class LoginActivity extends AppCompatActivity {
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
                             if(success) {
-
-                               /* m_session.setLoggedin(true);
-                                m_session.setName(jsonResponse.getString("email"));
-                                m_session.setMail(jsonResponse.getString("password"));
-                                //m_session.setID(jsonResponse.getInt("user_id"));*/
                                 // Send user data to dashboard activity
                                 Bundle mBundle = new Bundle();
                                 String jsonResponseString = jsonResponse.toString();
-                                Intent introIntent = new Intent(LoginActivity.this, IntroActivity.class);
-                                introIntent.putExtra("userData", jsonResponseString);
+                                Intent dashboardIntent = new Intent(LoginActivity.this, DashboardActivity.class);
+                                dashboardIntent.putExtra("userData", jsonResponseString);
 
                                 // Start dashboard activity
-                                LoginActivity.this.startActivity(introIntent);
+                                LoginActivity.this.startActivity(dashboardIntent);
                             }
                             else {
                                 AlertDialog.Builder alertBuilder = new AlertDialog.Builder(LoginActivity.this);
@@ -93,6 +103,7 @@ public class LoginActivity extends AppCompatActivity {
                 queue.add(loginRequest);
             }
         });
+
 
 
     }

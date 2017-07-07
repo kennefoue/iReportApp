@@ -28,7 +28,7 @@
     <string name="text_login">Login</string>
     <string name="text_dashboard">Dashboard</string>
     <string name="text_report">Report</string>
-    <string name="text_report_typ">Typ:</string>
+    <string name="text_report_typ">Type:</string>
     <string name="text_take_picture">Pictures</string>
     <string name="text_location">Location:</string>
     <string name="text_get_location">Get Location</string>
@@ -67,5 +67,22 @@
     <string name="desc_slide2">Conntect the charge</string>
     <string name="title_slide3">Conntect the charge</string>
     <string name="desc_slide3">Conntect the charge</string>
+
+
+
+
+        <string name="text_settings">Settings</string>
+        <string name="text_about_us">About Us</string>
+        <string name="text_user_info">User Info</string>
+        <string name="menu_button">Menu button</string>
+        <string name="text_adress">Adress</string>
+        <string name="text_mobile">Mobile</string>
+        <string name="text_more">More...</string>
+        <string name="text_email">Email</string>
+        <string name="text_iban">Iban</string>
+
+
+
+
 
 </resources>
